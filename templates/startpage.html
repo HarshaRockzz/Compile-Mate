@@ -4,7 +4,8 @@
 
 {% block navbar %}
 
-<form method="get" action="/signin" class="d-flex">
+<form method="post" action="/signin" class="d-flex">
+  {% csrf_token %}
   <input class="form-control me-2 my-2" type="email" id="email" name="email" placeholder="Email" aria-label="Email" style="width: 164px;">
   <input class="form-control me-2 my-2" type="password" id="password" name="password" placeholder="Password" aria-label="Password" style="width: 164px;">
   <button class="btn btn-outline-success mx-1 my-2 px-1 py-2" type="submit" style="width: 80px;">Sign in</button>
