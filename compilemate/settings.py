@@ -503,7 +503,7 @@ if DEBUG:
     # Add test admin user for development
     CHAT_DEVELOPMENT = {
         'CREATE_TEST_ADMIN': True,
-        'TEST_ADMIN_USERNAME': 'admin',
+        'TEST_ADMIN_USERNAME': '*****',
         'TEST_ADMIN_EMAIL': 'admin@compilemate.com',
-        'TEST_ADMIN_PASSWORD': 'admin123',
+        'TEST_ADMIN_PASSWORD': '********',
     } 
