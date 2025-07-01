@@ -1,1 +1,0 @@
-web: gunicorn Compile-Mate.wsgi --log-file -
