@@ -18,7 +18,7 @@ JUDGE0_SUBMIT = f"{JUDGE0_URL}/submissions/?base64_encoded=false&wait=false"
 JUDGE0_GET = f"{JUDGE0_URL}/submissions/{{token}}?base64_encoded=false"
 JUDGE0_HEADERS = {
     'X-RapidAPI-Host': 'judge0-ce.p.rapidapi.com',
-    'X-RapidAPI-Key': '09972a180emsh10e4d57740810a2p1d1d20jsnfd2d9841d196',
+    'X-RapidAPI-Key': ' ',
     'Content-Type': 'application/json',
 }
 
