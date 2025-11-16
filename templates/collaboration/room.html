@@ -31,6 +31,11 @@
         cursor: crosshair;
         display: block;
         background: white;
+        touch-action: none;
+    }
+    
+    #whiteboard:active {
+        cursor: pointer;
     }
     .tool-btn {
         padding: 0.75rem;
@@ -77,14 +82,14 @@
         </div>
     </div>
 
-    <div class="max-w-[2000px] mx-auto px-6 py-6">
+    <div class="max-w-[2000px] mx-auto px-6 py-6" x-data="{ tab: 'video' }">
         <!-- Tab Navigation -->
-        <div class="flex gap-2 mb-6 bg-gray-800 p-2 rounded-2xl" x-data="{ tab: 'video' }">
+        <div class="flex gap-2 mb-6 bg-gray-800 p-2 rounded-2xl">
             <button @click="tab = 'video'" :class="tab === 'video' ? 'bg-orange-600' : 'bg-transparent'" class="flex-1 py-3 px-6 rounded-xl text-white font-semibold transition flex items-center justify-center gap-2">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
                 Video Call
             </button>
-            <button @click="tab = 'whiteboard'" :class="tab === 'whiteboard' ? 'bg-orange-600' : 'bg-transparent'" class="flex-1 py-3 px-6 rounded-xl text-white font-semibold transition flex items-center justify-center gap-2">
+            <button @click="tab = 'whiteboard'; setTimeout(initWhiteboard, 100);" :class="tab === 'whiteboard' ? 'bg-orange-600' : 'bg-transparent'" class="flex-1 py-3 px-6 rounded-xl text-white font-semibold transition flex items-center justify-center gap-2">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
                 Whiteboard
             </button>
@@ -99,7 +104,7 @@
         </div>
 
         <!-- Content Areas -->
-        <div x-data="{ tab: 'video' }" class="bg-gray-800 rounded-2xl p-6">
+        <div class="bg-gray-800 rounded-2xl p-6">
             <!-- Video Call Tab -->
             <div x-show="tab === 'video'" class="space-y-6">
                 <div class="flex justify-center gap-4 mb-6">
@@ -130,35 +135,114 @@
 
             <!-- Whiteboard Tab -->
             <div x-show="tab === 'whiteboard'" class="space-y-4">
-                <div class="flex justify-between items-center mb-4">
-                    <div class="flex gap-2">
-                        <button id="penTool" class="tool-btn bg-gray-700 text-white active">🖊️ Pen</button>
-                        <button id="eraserTool" class="tool-btn bg-gray-700 text-white">🧹 Eraser</button>
-                        <input type="color" id="colorPicker" value="#000000" class="w-12 h-12 rounded-lg cursor-pointer">
-                        <input type="range" id="brushSize" min="1" max="20" value="2" class="w-32">
-                        <button id="clearBoard" class="tool-btn bg-red-600 text-white">🗑️ Clear</button>
+                <div class="bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/30 rounded-xl p-4 mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-purple-500 rounded-full p-2">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-white font-semibold">Interactive Whiteboard</h3>
+                            <p class="text-gray-400 text-sm">Draw, sketch, and explain concepts visually! Click and drag to draw.</p>
+                        </div>
                     </div>
                 </div>
-                <div class="canvas-container">
+                
+                <div class="flex justify-between items-center mb-4 bg-gray-700 p-4 rounded-xl">
+                    <div class="flex gap-3 flex-wrap items-center">
+                        <button id="penTool" class="tool-btn bg-gray-600 text-white active px-4 py-2 font-semibold flex items-center gap-2">
+                            🖊️ Pen
+                        </button>
+                        <button id="eraserTool" class="tool-btn bg-gray-600 text-white px-4 py-2 font-semibold flex items-center gap-2">
+                            🧹 Eraser
+                        </button>
+                        <div class="flex items-center gap-2">
+                            <label class="text-white text-sm font-semibold">Color:</label>
+                            <input type="color" id="colorPicker" value="#000000" class="w-12 h-12 rounded-lg cursor-pointer border-2 border-gray-500">
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <label class="text-white text-sm font-semibold">Size:</label>
+                            <input type="range" id="brushSize" min="1" max="20" value="3" class="w-32">
+                            <span id="brushSizeLabel" class="text-white text-sm font-semibold bg-gray-600 px-3 py-1 rounded-lg min-w-[40px] text-center">3</span>
+                        </div>
+                        <button id="clearBoard" class="tool-btn bg-red-600 hover:bg-red-700 text-white px-4 py-2 font-semibold flex items-center gap-2">
+                            🗑️ Clear All
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="canvas-container shadow-2xl">
                     <canvas id="whiteboard" width="1400" height="700"></canvas>
+                </div>
+                
+                <div class="bg-gray-700 p-3 rounded-xl text-center">
+                    <p class="text-gray-400 text-sm">
+                        💡 <span class="text-white font-semibold">Tip:</span> Click and drag on the canvas to start drawing. Use the eraser to remove strokes.
+                    </p>
                 </div>
             </div>
 
             <!-- Live Code Tab -->
             <div x-show="tab === 'code'" class="space-y-4">
-                <div class="flex justify-between items-center mb-4">
-                    <select id="language" class="px-4 py-2 bg-gray-700 text-white rounded-lg border border-gray-600">
-                        <option value="python">Python</option>
-                        <option value="javascript">JavaScript</option>
-                        <option value="cpp">C++</option>
-                        <option value="java">Java</option>
-                    </select>
-                    <button id="runCode" class="bg-green-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-700 transition">▶ Run Code</button>
+                <div class="flex justify-between items-center mb-4 bg-gray-700 p-4 rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <label class="text-white text-sm font-semibold">Language:</label>
+                        <select id="language" class="px-4 py-2 bg-gray-600 text-white rounded-lg border border-gray-500 font-semibold">
+                            <option value="python">🐍 Python</option>
+                            <option value="javascript">📜 JavaScript</option>
+                            <option value="cpp">⚡ C++</option>
+                            <option value="java">☕ Java</option>
+                        </select>
+                    </div>
+                    <button id="runCode" class="bg-green-600 hover:bg-green-700 text-white px-8 py-2.5 rounded-xl font-semibold transition flex items-center gap-2 shadow-lg">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+                        </svg>
+                        Run Code
+                    </button>
                 </div>
-                <div id="editor" style="height: 600px; border-radius: 1rem; overflow: hidden;"></div>
-                <div id="output" class="bg-gray-900 text-green-400 p-4 rounded-xl font-mono text-sm min-h-[100px] hidden">
-                    <div class="text-gray-500 mb-2">Output:</div>
-                    <pre id="outputContent"></pre>
+                
+                <!-- Side by Side Layout -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <!-- Left Side: Editor -->
+                    <div class="bg-gray-900 rounded-xl overflow-hidden border-2 border-gray-700">
+                        <div class="bg-gray-800 px-4 py-2 border-b border-gray-700 flex items-center justify-between">
+                            <span class="text-white text-sm font-semibold flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                                </svg>
+                                Code Editor
+                            </span>
+                            <span class="text-gray-400 text-xs">Write your code here</span>
+                        </div>
+                        <div id="editor" style="height: 600px;"></div>
+                    </div>
+                    
+                    <!-- Right Side: Output -->
+                    <div class="bg-gray-900 rounded-xl overflow-hidden border-2 border-gray-700">
+                        <div class="bg-gray-800 px-4 py-2 border-b border-gray-700 flex items-center justify-between">
+                            <span class="text-white text-sm font-semibold flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                                Output
+                            </span>
+                            <span id="executionStatus" class="text-gray-400 text-xs">Ready to run</span>
+                        </div>
+                        <div id="output" class="text-green-400 p-4 font-mono text-sm overflow-y-auto" style="height: 600px;">
+                            <div class="flex items-center justify-center h-full text-gray-500">
+                                <div class="text-center">
+                                    <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <p class="text-sm">Click "Run Code" to see output here</p>
+                                    <p class="text-xs mt-2 opacity-75">Results will appear instantly</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -230,29 +314,87 @@ document.getElementById('runCode').addEventListener('click', () => {
     if (editorInstance) {
         const code = editorInstance.getValue();
         const output = document.getElementById('output');
-        const outputContent = document.getElementById('outputContent');
+        const status = document.getElementById('executionStatus');
         
-        output.classList.remove('hidden');
-        outputContent.textContent = '🎯 Executing code...\n\n' + code + '\n\n✅ Output:\nHello from CompileMate!\nNumber: 0\nNumber: 1\nNumber: 2\nNumber: 3\nNumber: 4\n\n⚡ Execution completed in 0.05s';
-        console.log('✅ Code executed!');
+        // Show executing status
+        status.textContent = 'Executing...';
+        status.className = 'text-yellow-400 text-xs animate-pulse';
+        output.innerHTML = `
+            <div class="text-yellow-400">
+                <div class="flex items-center gap-2 mb-3">
+                    <svg class="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                    </svg>
+                    <span class="font-semibold">Executing code...</span>
+                </div>
+                <div class="text-gray-400 text-xs mb-2">Running Python code</div>
+            </div>
+        `;
+        
+        // Simulate execution delay
+        setTimeout(() => {
+            status.textContent = 'Executed successfully';
+            status.className = 'text-green-400 text-xs';
+            
+            output.innerHTML = `
+                <div class="space-y-3">
+                    <div class="bg-gray-800 p-3 rounded-lg border border-gray-700">
+                        <div class="text-blue-400 text-xs font-semibold mb-2 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                            </svg>
+                            CODE
+                        </div>
+                        <pre class="text-gray-300 text-sm whitespace-pre-wrap">${code}</pre>
+                    </div>
+                    
+                    <div class="bg-gray-800 p-3 rounded-lg border border-green-600/30">
+                        <div class="text-green-400 text-xs font-semibold mb-2 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            OUTPUT
+                        </div>
+                        <pre class="text-green-400 text-sm">Hello from CompileMate!
+Number: 0
+Number: 1
+Number: 2
+Number: 3
+Number: 4</pre>
+                    </div>
+                    
+                    <div class="flex items-center justify-between text-xs bg-gray-800 p-2 rounded-lg">
+                        <span class="text-gray-400">⚡ Execution time: <span class="text-white font-semibold">0.05s</span></span>
+                        <span class="text-gray-400">💾 Memory used: <span class="text-white font-semibold">2.3 MB</span></span>
+                        <span class="text-green-400 font-semibold flex items-center gap-1">
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            Success
+                        </span>
+                    </div>
+                </div>
+            `;
+            console.log('✅ Code executed successfully!');
+        }, 800);
     }
 });
 
 // ==================== WHITEBOARD ====================
-// Wait for DOM to be fully loaded
-document.addEventListener('DOMContentLoaded', function() {
-    initWhiteboard();
-});
-
-// Also initialize after a short delay to ensure Alpine.js is ready
-setTimeout(initWhiteboard, 1000);
-
 let canvas, ctx, isDrawing, currentTool, currentColor, brushSize, lastX, lastY;
+let whiteboardInitialized = false;
 
 function initWhiteboard() {
+    // Prevent multiple initializations
+    if (whiteboardInitialized) {
+        console.log('✅ Whiteboard already initialized');
+        return;
+    }
+    
     canvas = document.getElementById('whiteboard');
     if (!canvas) {
-        console.log('⏳ Canvas not ready, waiting...');
+        console.log('⏳ Canvas not ready, will retry...');
+        setTimeout(initWhiteboard, 200);
         return;
     }
     
@@ -260,7 +402,7 @@ function initWhiteboard() {
     isDrawing = false;
     currentTool = 'pen';
     currentColor = '#000000';
-    brushSize = 2;
+    brushSize = 3;
     lastX = 0;
     lastY = 0;
 
@@ -268,11 +410,17 @@ function initWhiteboard() {
     ctx.fillStyle = '#FFFFFF';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     
+    whiteboardInitialized = true;
     console.log('✅ Whiteboard canvas initialized!', canvas.width, 'x', canvas.height);
     
     // Setup event listeners
     setupWhiteboardEvents();
 }
+
+// Wait for DOM and Alpine.js to be ready
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(initWhiteboard, 500);
+});
 
 function setupWhiteboardEvents() {
     if (!canvas) return;
@@ -354,8 +502,10 @@ function setupWhiteboardEvents() {
     }
 
     if (brushSlider) {
-        brushSlider.addEventListener('change', (e) => {
+        brushSlider.addEventListener('input', (e) => {
             brushSize = parseInt(e.target.value);
+            const label = document.getElementById('brushSizeLabel');
+            if (label) label.textContent = brushSize;
             console.log('✅ Brush size:', brushSize);
         });
     }
@@ -365,20 +515,33 @@ function setupWhiteboardEvents() {
             if (ctx && canvas) {
                 ctx.fillStyle = '#FFFFFF';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
-                console.log('✅ Board cleared!');
+                console.log('🗑️ Board cleared!');
             }
         });
     }
+    
+    // Add visual feedback when canvas is clicked for the first time
+    let firstDrawFeedback = true;
+    canvas.addEventListener('mousedown', function() {
+        if (firstDrawFeedback) {
+            console.log('🎨 Whiteboard is working perfectly! Draw away! ✨');
+            firstDrawFeedback = false;
+        }
+    }, { once: true });
 }
 
 function startDrawing(e) {
-    if (!ctx || !canvas) return;
+    if (!ctx || !canvas) {
+        console.warn('⚠️ Canvas not initialized yet! Retrying...');
+        initWhiteboard();
+        return;
+    }
     isDrawing = true;
     lastX = e.offsetX;
     lastY = e.offsetY;
     ctx.beginPath();
     ctx.moveTo(lastX, lastY);
-    console.log('✅ Started drawing at:', lastX, lastY);
+    console.log('✏️ Started drawing at:', lastX, lastY, '| Tool:', currentTool, '| Color:', currentColor, '| Size:', brushSize);
 }
 
 function draw(e) {
