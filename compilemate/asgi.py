@@ -18,6 +18,8 @@ from django.urls import path
 from core.consumers import ChatConsumer, AdminChatConsumer
 # Import battle consumers
 from battles.consumers import BattleConsumer
+# Import WebRTC signaling consumer
+from collaboration.consumers import WebRTCSignalingConsumer
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'compilemate.settings')
 
@@ -26,6 +28,7 @@ websocket_urlpatterns = [
     path('ws/chat/<int:chat_id>/', ChatConsumer.as_asgi()),
     path('ws/admin/chat/', AdminChatConsumer.as_asgi()),
     path('ws/battle/<uuid:battle_id>/', BattleConsumer.as_asgi()),
+    path('ws/webrtc/<str:room_id>/', WebRTCSignalingConsumer.as_asgi()),
 ]
 
 # ASGI application with WebSocket support
