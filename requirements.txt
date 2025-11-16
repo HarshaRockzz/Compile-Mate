@@ -43,6 +43,7 @@ dj-database-url==2.1.0
 # Real-time / WebSocket Support
 channels==4.0.0
 channels-redis==4.1.0
+daphne==4.2.1
 
 # Code Execution Engine
 docker==7.1.0
