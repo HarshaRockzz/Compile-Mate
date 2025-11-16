@@ -21,6 +21,7 @@ ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = [
+    'daphne',  # Must be at the top for WebSocket support
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -623,11 +623,14 @@ function initializeWebSocket() {
     
     webSocket.onopen = () => {
         console.log('✅ WebSocket connected!');
+        console.log('📍 WebSocket URL:', WS_URL);
+        console.log('🏠 Room ID:', ROOM_ID);
         updateConnectionStatus('connected');
         webSocket.send(JSON.stringify({
             type: 'join_room',
             room_id: ROOM_ID
         }));
+        console.log('✅ Joined room via WebSocket!');
     };
     
     webSocket.onmessage = async (event) => {
@@ -637,7 +640,10 @@ function initializeWebSocket() {
     
     webSocket.onerror = (error) => {
         console.error('❌ WebSocket error:', error);
+        console.error('🔍 WebSocket URL:', WS_URL);
+        console.error('🔍 Check if server is running and WebSocket endpoint exists');
         updateConnectionStatus('error');
+        alert('⚠️ WebSocket Connection Failed!\n\nPlease make sure the server is running.\nCheck console for details.');
     };
     
     webSocket.onclose = () => {
@@ -1056,6 +1062,9 @@ function stopScreenShare() {
     console.log('✅ Screen sharing stopped');
 }
 
+// Initialize WebSocket connection when page loads
+console.log('🚀 Initializing WebRTC...');
+initializeWebSocket();
 console.log('✅ All features loaded successfully!');
 </script>
 {% endblock %}
