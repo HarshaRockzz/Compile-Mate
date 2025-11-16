@@ -110,6 +110,215 @@
         .field-error {
             @apply border-red-300 focus:ring-red-500 focus:border-red-500;
         }
+        
+        /* ============================================
+           GLOBAL MOBILE RESPONSIVE STYLES
+           ============================================ */
+        
+        /* Base responsiveness */
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        html {
+            -webkit-text-size-adjust: 100%;
+            touch-action: manipulation;
+        }
+        
+        /* Mobile Container Adjustments */
+        @media (max-width: 640px) {
+            .container {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }
+            
+            /* Reduce padding on mobile */
+            .px-6 { padding-left: 1rem !important; padding-right: 1rem !important; }
+            .py-6 { padding-top: 1rem !important; padding-bottom: 1rem !important; }
+            .px-8 { padding-left: 1rem !important; padding-right: 1rem !important; }
+            .py-8 { padding-top: 1rem !important; padding-bottom: 1rem !important; }
+            .px-12 { padding-left: 1rem !important; padding-right: 1rem !important; }
+            .py-12 { padding-top: 1.5rem !important; padding-bottom: 1.5rem !important; }
+            
+            /* Adjust text sizes */
+            .text-5xl { font-size: 2rem !important; }
+            .text-4xl { font-size: 1.75rem !important; }
+            .text-3xl { font-size: 1.5rem !important; }
+            .text-2xl { font-size: 1.25rem !important; }
+            
+            /* Button sizes */
+            button, .btn {
+                font-size: 0.875rem !important;
+                padding: 0.5rem 1rem !important;
+            }
+            
+            /* Card spacing */
+            .space-y-8 > * + * { margin-top: 1.5rem !important; }
+            .space-y-6 > * + * { margin-top: 1rem !important; }
+            .gap-8 { gap: 1rem !important; }
+            .gap-6 { gap: 0.75rem !important; }
+        }
+        
+        /* Tablet Adjustments */
+        @media (max-width: 768px) {
+            /* Grid adjustments */
+            .grid-cols-3 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+            .grid-cols-4 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+            
+            /* Flex wrapping */
+            .flex-nowrap { flex-wrap: wrap !important; }
+            
+            /* Hide on mobile */
+            .hidden-mobile { display: none !important; }
+        }
+        
+        /* Navigation Mobile */
+        @media (max-width: 1024px) {
+            /* Mobile menu */
+            nav .flex.space-x-4 {
+                flex-direction: column;
+                space-x: 0;
+            }
+            
+            nav .flex.space-x-4 > * {
+                margin-left: 0 !important;
+                margin-top: 0.5rem;
+            }
+        }
+        
+        /* Forms Mobile */
+        @media (max-width: 640px) {
+            input, textarea, select {
+                font-size: 16px !important; /* Prevents zoom on iOS */
+            }
+            
+            .form-group {
+                margin-bottom: 1rem !important;
+            }
+        }
+        
+        /* Tables Mobile */
+        @media (max-width: 768px) {
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            thead {
+                display: none;
+            }
+            
+            tbody, tr, td {
+                display: block;
+                width: 100%;
+            }
+            
+            tr {
+                margin-bottom: 1rem;
+                border: 1px solid #e5e7eb;
+                border-radius: 0.5rem;
+                padding: 0.5rem;
+            }
+            
+            td {
+                text-align: right;
+                padding: 0.5rem;
+                position: relative;
+                padding-left: 50%;
+            }
+            
+            td:before {
+                content: attr(data-label);
+                position: absolute;
+                left: 0.5rem;
+                width: 45%;
+                padding-right: 0.5rem;
+                white-space: nowrap;
+                text-align: left;
+                font-weight: bold;
+            }
+        }
+        
+        /* Modals Mobile */
+        @media (max-width: 640px) {
+            [role="dialog"], .modal {
+                margin: 0 !important;
+                max-width: 100% !important;
+                width: 100% !important;
+                height: 100vh !important;
+                border-radius: 0 !important;
+            }
+        }
+        
+        /* Images Responsive */
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        /* Code blocks Mobile */
+        @media (max-width: 640px) {
+            pre, code {
+                font-size: 0.75rem !important;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+        
+        /* Sticky elements Mobile */
+        @media (max-width: 640px) {
+            .sticky {
+                position: relative !important;
+            }
+        }
+        
+        /* Chat Widget Mobile */
+        @media (max-width: 640px) {
+            #chat-widget {
+                bottom: 1rem !important;
+                right: 1rem !important;
+            }
+            
+            #chat-box {
+                width: calc(100vw - 2rem) !important;
+                max-width: 100% !important;
+                height: 70vh !important;
+            }
+        }
+        
+        /* Monaco Editor Mobile */
+        @media (max-width: 768px) {
+            .monaco-editor, #editor {
+                height: 400px !important;
+            }
+        }
+        
+        /* Scrollbar styling for mobile */
+        @media (max-width: 768px) {
+            ::-webkit-scrollbar {
+                width: 4px;
+                height: 4px;
+            }
+            
+            ::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            
+            ::-webkit-scrollbar-thumb {
+                background: rgba(0, 0, 0, 0.2);
+                border-radius: 2px;
+            }
+        }
+        
+        /* Touch-friendly clickable areas */
+        @media (max-width: 768px) {
+            button, a, [role="button"] {
+                min-height: 44px;
+                min-width: 44px;
+            }
+        }
     </style>
     
     <link rel="icon" type="image/png" href="{% static 'logo.png' %}">

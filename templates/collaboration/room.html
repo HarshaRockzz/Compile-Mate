@@ -56,6 +56,32 @@
         overflow: hidden;
         border: 2px solid #374151;
     }
+    
+    /* Collaboration Room Mobile Styles */
+    @media (max-width: 768px) {
+        #editor, #output {
+            height: 350px !important;
+        }
+        
+        .video-grid {
+            grid-template-columns: 1fr !important;
+        }
+        
+        #whiteboard {
+            max-width: 100% !important;
+        }
+    }
+    
+    @media (max-width: 640px) {
+        .flex.justify-center.gap-4.mb-6 {
+            flex-wrap: wrap;
+        }
+        
+        .flex.justify-center.gap-4.mb-6 button {
+            flex: 1 1 45%;
+            min-width: 100px;
+        }
+    }
 </style>
 {% endblock %}
 
