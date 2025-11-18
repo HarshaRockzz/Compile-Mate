@@ -216,36 +216,59 @@ class ResumeAnalyzer:
         if phones:
             contact['phone'] = phones[0]
         
-        # LinkedIn - Extract full URL
+        # Clean text for better URL matching (remove extra spaces/newlines)
+        text_clean = ' '.join(self.resume_text.split())
+        
+        # LinkedIn - More flexible patterns
         linkedin_patterns = [
-            r'(?:https?://)?(?:www\.)?linkedin\.com/in/[\w\-]+/?',
-            r'linkedin\.com/in/[\w\-]+/?',
-            r'(?:https?://)?(?:www\.)?linkedin\.com/pub/[\w\-]+/?',
+            # Full URLs with various formats
+            r'(?:https?://)?(?:www\.)?linkedin\.com/in/[a-zA-Z0-9\-_%.~!@#$&*()+=,;]+/?',
+            r'(?:https?://)?(?:www\.)?linkedin\.com/pub/[a-zA-Z0-9\-_%.~!@#$&*()+=,;]+/?',
+            r'(?:https?://)?(?:www\.)?linkedin\.com/profile/[a-zA-Z0-9\-_%.~!@#$&*()+=,;]+/?',
+            # Just domain with path
+            r'linkedin\.com/[a-zA-Z0-9\-_/.]+',
         ]
+        
         for pattern in linkedin_patterns:
-            linkedin_matches = re.findall(pattern, self.resume_text, re.IGNORECASE)
+            linkedin_matches = re.findall(pattern, text_clean, re.IGNORECASE)
             if linkedin_matches:
-                url = linkedin_matches[0]
+                url = linkedin_matches[0].strip()
+                # Clean up the URL
+                url = url.rstrip('/.,;')
                 # Ensure URL has https prefix
                 if not url.startswith('http'):
                     url = 'https://' + url
                 contact['linkedin'] = url
                 break
         
-        # GitHub - Extract full URL
+        # Fallback: just check if linkedin is mentioned
+        if not contact['linkedin'] and 'linkedin' in self.resume_text.lower():
+            contact['linkedin'] = 'Found in resume'
+        
+        # GitHub - More flexible patterns
         github_patterns = [
-            r'(?:https?://)?(?:www\.)?github\.com/[\w\-]+/?',
-            r'github\.com/[\w\-]+/?',
+            # Full URLs
+            r'(?:https?://)?(?:www\.)?github\.com/[a-zA-Z0-9\-_%.~!@#$&*()+=,;]+/?',
+            r'(?:https?://)?git\.io/[a-zA-Z0-9\-_%.]+/?',
+            # Just domain with path
+            r'github\.com/[a-zA-Z0-9\-_/.]+',
         ]
+        
         for pattern in github_patterns:
-            github_matches = re.findall(pattern, self.resume_text, re.IGNORECASE)
+            github_matches = re.findall(pattern, text_clean, re.IGNORECASE)
             if github_matches:
-                url = github_matches[0]
+                url = github_matches[0].strip()
+                # Clean up the URL
+                url = url.rstrip('/.,;')
                 # Ensure URL has https prefix
                 if not url.startswith('http'):
                     url = 'https://' + url
                 contact['github'] = url
                 break
+        
+        # Fallback: just check if github is mentioned
+        if not contact['github'] and 'github' in self.resume_text.lower():
+            contact['github'] = 'Found in resume'
         
         return contact
     

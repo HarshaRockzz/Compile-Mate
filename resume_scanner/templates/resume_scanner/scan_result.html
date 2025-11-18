@@ -263,9 +263,15 @@
                             <div class="flex-1">
                                 <p class="text-sm text-gray-600">LinkedIn</p>
                                 {% if contact_info.linkedin %}
-                                    <a href="{{ contact_info.linkedin }}" target="_blank" class="font-medium text-blue-600 hover:text-blue-800 underline text-sm break-all">
-                                        {{ contact_info.linkedin }}
-                                    </a>
+                                    {% if contact_info.linkedin == 'Found in resume' %}
+                                        <p class="font-medium text-green-600">✓ Found (URL format unclear)</p>
+                                    {% elif 'http' in contact_info.linkedin %}
+                                        <a href="{{ contact_info.linkedin }}" target="_blank" class="font-medium text-blue-600 hover:text-blue-800 underline text-sm break-all">
+                                            {{ contact_info.linkedin }}
+                                        </a>
+                                    {% else %}
+                                        <p class="font-medium text-green-600">✓ {{ contact_info.linkedin }}</p>
+                                    {% endif %}
                                 {% else %}
                                     <p class="font-medium text-yellow-600">Recommended to add</p>
                                 {% endif %}
@@ -277,9 +283,15 @@
                             <div class="flex-1">
                                 <p class="text-sm text-gray-600">GitHub</p>
                                 {% if contact_info.github %}
-                                    <a href="{{ contact_info.github }}" target="_blank" class="font-medium text-blue-600 hover:text-blue-800 underline text-sm break-all">
-                                        {{ contact_info.github }}
-                                    </a>
+                                    {% if contact_info.github == 'Found in resume' %}
+                                        <p class="font-medium text-green-600">✓ Found (URL format unclear)</p>
+                                    {% elif 'http' in contact_info.github %}
+                                        <a href="{{ contact_info.github }}" target="_blank" class="font-medium text-blue-600 hover:text-blue-800 underline text-sm break-all">
+                                            {{ contact_info.github }}
+                                        </a>
+                                    {% else %}
+                                        <p class="font-medium text-green-600">✓ {{ contact_info.github }}</p>
+                                    {% endif %}
                                 {% else %}
                                     <p class="font-medium text-yellow-600">Recommended to add</p>
                                 {% endif %}
