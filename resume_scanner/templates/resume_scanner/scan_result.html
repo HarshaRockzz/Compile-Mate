@@ -262,9 +262,13 @@
                             <span class="text-2xl">💼</span>
                             <div class="flex-1">
                                 <p class="text-sm text-gray-600">LinkedIn</p>
-                                <p class="font-medium {% if contact_info.linkedin %}text-green-600{% else %}text-yellow-600{% endif %}">
-                                    {% if contact_info.linkedin %}Found{% else %}Recommended{% endif %}
-                                </p>
+                                {% if contact_info.linkedin %}
+                                    <a href="{{ contact_info.linkedin }}" target="_blank" class="font-medium text-blue-600 hover:text-blue-800 underline text-sm break-all">
+                                        {{ contact_info.linkedin }}
+                                    </a>
+                                {% else %}
+                                    <p class="font-medium text-yellow-600">Recommended to add</p>
+                                {% endif %}
                             </div>
                         </div>
 
@@ -272,9 +276,13 @@
                             <span class="text-2xl">💻</span>
                             <div class="flex-1">
                                 <p class="text-sm text-gray-600">GitHub</p>
-                                <p class="font-medium {% if contact_info.github %}text-green-600{% else %}text-yellow-600{% endif %}">
-                                    {% if contact_info.github %}Found{% else %}Recommended{% endif %}
-                                </p>
+                                {% if contact_info.github %}
+                                    <a href="{{ contact_info.github }}" target="_blank" class="font-medium text-blue-600 hover:text-blue-800 underline text-sm break-all">
+                                        {{ contact_info.github }}
+                                    </a>
+                                {% else %}
+                                    <p class="font-medium text-yellow-600">Recommended to add</p>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

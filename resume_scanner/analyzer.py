@@ -216,13 +216,36 @@ class ResumeAnalyzer:
         if phones:
             contact['phone'] = phones[0]
         
-        # LinkedIn
-        if 'linkedin.com' in self.resume_text:
-            contact['linkedin'] = True
+        # LinkedIn - Extract full URL
+        linkedin_patterns = [
+            r'(?:https?://)?(?:www\.)?linkedin\.com/in/[\w\-]+/?',
+            r'linkedin\.com/in/[\w\-]+/?',
+            r'(?:https?://)?(?:www\.)?linkedin\.com/pub/[\w\-]+/?',
+        ]
+        for pattern in linkedin_patterns:
+            linkedin_matches = re.findall(pattern, self.resume_text, re.IGNORECASE)
+            if linkedin_matches:
+                url = linkedin_matches[0]
+                # Ensure URL has https prefix
+                if not url.startswith('http'):
+                    url = 'https://' + url
+                contact['linkedin'] = url
+                break
         
-        # GitHub
-        if 'github.com' in self.resume_text:
-            contact['github'] = True
+        # GitHub - Extract full URL
+        github_patterns = [
+            r'(?:https?://)?(?:www\.)?github\.com/[\w\-]+/?',
+            r'github\.com/[\w\-]+/?',
+        ]
+        for pattern in github_patterns:
+            github_matches = re.findall(pattern, self.resume_text, re.IGNORECASE)
+            if github_matches:
+                url = github_matches[0]
+                # Ensure URL has https prefix
+                if not url.startswith('http'):
+                    url = 'https://' + url
+                contact['github'] = url
+                break
         
         return contact
     
