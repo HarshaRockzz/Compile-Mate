@@ -15,12 +15,32 @@
         <div class="max-w-xl relative z-10">
             <!-- Logo -->
             <div class="mb-6">
-                <a href="/" class="inline-flex items-center space-x-2">
-                    <div class="bg-white/20 backdrop-blur-sm rounded-xl p-2">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                <a href="/" class="inline-flex items-center space-x-3">
+                    <svg class="w-10 h-10 drop-shadow-lg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="loginBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#8b5cf6"/>
+                                <stop offset="50%" style="stop-color:#ec4899"/>
+                                <stop offset="100%" style="stop-color:#ef4444"/>
+                            </linearGradient>
+                            <linearGradient id="loginIconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#ffffff"/>
+                                <stop offset="100%" style="stop-color:#fef3c7;stop-opacity:0.9"/>
+                            </linearGradient>
+                        </defs>
+                        <rect width="100" height="100" rx="22" fill="url(#loginBgGrad)"/>
+                        <circle cx="50" cy="50" r="35" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+                        <path d="M50 25 L50 75" stroke="url(#loginIconGrad)" stroke-width="6" stroke-linecap="round" transform="rotate(15 50 50)"/>
+                        <path d="M35 35 L25 50 L35 65" stroke="url(#loginIconGrad)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M65 35 L75 50 L65 65" stroke="url(#loginIconGrad)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="50" cy="20" r="2.5" fill="url(#loginIconGrad)"/>
+                        <circle cx="42" cy="23" r="1.8" fill="url(#loginIconGrad)" opacity="0.7"/>
+                        <circle cx="58" cy="23" r="1.8" fill="url(#loginIconGrad)" opacity="0.7"/>
+                        <circle cx="50" cy="80" r="2.5" fill="url(#loginIconGrad)"/>
+                        <circle cx="42" cy="77" r="1.8" fill="url(#loginIconGrad)" opacity="0.7"/>
+                        <circle cx="58" cy="77" r="1.8" fill="url(#loginIconGrad)" opacity="0.7"/>
+                        <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="0.8" stroke-dasharray="5,5"/>
                     </svg>
-                    </div>
                     <span class="text-lg font-bold">CompileMate</span>
                 </a>
             </div>

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#ec4899;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ef4444;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="iconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fef3c7;stop-opacity:0.9" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background with rounded corners -->
+  <rect width="100" height="100" rx="22" fill="url(#bgGrad)"/>
+  
+  <!-- Inner glow circle -->
+  <circle cx="50" cy="50" r="35" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+  
+  <!-- Main Code Icon with glow -->
+  <g filter="url(#glow)">
+    <!-- Center slash -->
+    <path d="M50 25 L50 75" stroke="url(#iconGrad)" stroke-width="6" stroke-linecap="round" transform="rotate(15 50 50)"/>
+    
+    <!-- Left bracket -->
+    <path d="M35 35 L25 50 L35 65" stroke="url(#iconGrad)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    
+    <!-- Right bracket -->
+    <path d="M65 35 L75 50 L65 65" stroke="url(#iconGrad)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    
+    <!-- Top decorative dots -->
+    <circle cx="50" cy="20" r="2.5" fill="url(#iconGrad)"/>
+    <circle cx="42" cy="23" r="1.8" fill="url(#iconGrad)" opacity="0.7"/>
+    <circle cx="58" cy="23" r="1.8" fill="url(#iconGrad)" opacity="0.7"/>
+    
+    <!-- Bottom decorative dots -->
+    <circle cx="50" cy="80" r="2.5" fill="url(#iconGrad)"/>
+    <circle cx="42" cy="77" r="1.8" fill="url(#iconGrad)" opacity="0.7"/>
+    <circle cx="58" cy="77" r="1.8" fill="url(#iconGrad)" opacity="0.7"/>
+  </g>
+  
+  <!-- Outer ring decoration -->
+  <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="0.8" stroke-dasharray="5,5"/>
+</svg>
