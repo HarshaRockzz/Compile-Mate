@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Challenge History - CompileMate{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header -->
+        <div class="flex justify-between items-end mb-8">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Challenge History</h1>
+                <p class="text-gray-600 dark:text-gray-400 mt-1">Track your daily coding journey</p>
+            </div>
+
+            <!-- Streak Stats -->
+            <div class="flex gap-4">
+                <div
+                    class="bg-white dark:bg-gray-800 rounded-xl px-4 py-2 shadow-sm border border-gray-100 dark:border-gray-700 flex items-center gap-3">
+                    <div class="text-2xl">🔥</div>
+                    <div>
+                        <div class="text-xs text-gray-500 uppercase font-bold tracking-wider">Current Streak</div>
+                        <div class="text-xl font-bold text-orange-500">{{ streak_stats.current_streak }} Days</div>
+                    </div>
+                </div>
+                <div
+                    class="bg-white dark:bg-gray-800 rounded-xl px-4 py-2 shadow-sm border border-gray-100 dark:border-gray-700 flex items-center gap-3">
+                    <div class="text-2xl">⚡️</div>
+                    <div>
+                        <div class="text-xs text-gray-500 uppercase font-bold tracking-wider">Longest Streak</div>
+                        <div class="text-xl font-bold text-yellow-500">{{ streak_stats.longest_streak }} Days</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Participation List -->
+        <div
+            class="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden border border-gray-200 dark:border-gray-700">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="bg-gray-50 dark:bg-gray-900/50 border-b border-gray-200 dark:border-gray-700">
+                            <th class="px-6 py-4 text-sm font-bold text-gray-500 uppercase tracking-wider">Date</th>
+                            <th class="px-6 py-4 text-sm font-bold text-gray-500 uppercase tracking-wider">Challenge
+                            </th>
+                            <th class="px-6 py-4 text-sm font-bold text-gray-500 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-4 text-sm font-bold text-gray-500 uppercase tracking-wider">Completed At
+                            </th>
+                            <th class="px-6 py-4 text-sm font-bold text-gray-500 uppercase tracking-wider text-right">
+                                Rewards</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                        {% for p in participations %}
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-bold text-gray-900 dark:text-white">
+                                    {{ p.challenge.date|date:"M d, Y" }}
+                                </div>
+                                <div class="text-xs text-gray-500">
+                                    {{ p.started_at|time:"H:i" }}
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <a href="{% url 'problems:problem_detail' p.challenge.problem.slug %}"
+                                    class="font-medium text-blue-600 dark:text-blue-400 hover:underline">
+                                    {{ p.challenge.problem.title }}
+                                </a>
+                            </td>
+                            <td class="px-6 py-4">
+                                {% if p.status == 'completed' %}
+                                <span
+                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                    ✅ Completed
+                                </span>
+                                {% else %}
+                                <span
+                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
+                                    ⏳ In Progress
+                                </span>
+                                {% endif %}
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
+                                {% if p.completed_at %}
+                                {{ p.completed_at|date:"M d, H:i" }}
+                                {% else %}
+                                -
+                                {% endif %}
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                {% if p.status == 'completed' %}
+                                <div class="flex items-center justify-end gap-2 text-sm">
+                                    <span class="font-bold text-yellow-600 dark:text-yellow-400">+{{ p.coins_earned }}
+                                        💰</span>
+                                    <span class="font-bold text-purple-600 dark:text-purple-400">+{{ p.xp_earned }}
+                                        XP</span>
+                                </div>
+                                {% else %}
+                                <span class="text-gray-400">-</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="px-6 py-12 text-center text-gray-500 dark:text-gray-400">
+                                <div class="text-4xl mb-3">📅</div>
+                                <p>No challenges attempted yet.</p>
+                                <a href="{% url 'daily_challenges:daily_challenge' %}"
+                                    class="text-blue-600 hover:text-blue-700 font-semibold mt-2 inline-block">
+                                    Go to Today's Challenge &rarr;
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination (if needed) -->
+            <div
+                class="px-6 py-4 bg-gray-50 dark:bg-gray-900/50 border-t border-gray-200 dark:border-gray-700 text-xs text-gray-500 text-center">
+                Showing last 30 challenges
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

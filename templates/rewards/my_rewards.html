@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Rewards - CompileMate{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-yellow-50 to-orange-100 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-600 to-orange-600 mb-4">
+                🏆 My Rewards
+            </h1>
+            <p class="text-gray-600 text-lg">Your hard-earned achievements and treasures</p>
+        </div>
+
+        <!-- Coin Balance Card -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 mb-12 border border-yellow-200 transform hover:scale-[1.01] transition-transform">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-lg font-bold text-gray-500 uppercase tracking-wide">Current Balance</h2>
+                    <div class="text-5xl font-black text-gray-900 mt-2 flex items-center gap-3">
+                        <span class="text-yellow-500 text-6xl">🪙</span>
+                        {{ user.coins|default:0 }}
+                    </div>
+                </div>
+                <div class="text-right">
+                    <a href="{% url 'rewards:marketplace' %}" class="inline-block bg-gradient-to-r from-yellow-500 to-orange-600 text-white font-bold py-3 px-8 rounded-xl shadow-lg hover:shadow-xl hover:from-yellow-600 hover:to-orange-700 transition">
+                        Visit Marketplace 🛍️
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- Earned Rewards -->
+            <div class="bg-white rounded-2xl shadow-lg p-6">
+                <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                    <span>🎖️</span> Achievements & Badges
+                </h3>
+                
+                {% if user_rewards %}
+                    <div class="grid gap-4">
+                        {% for item in user_rewards %}
+                        <div class="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-purple-50 to-indigo-50 border border-purple-100">
+                            <div class="w-12 h-12 bg-purple-200 rounded-full flex items-center justify-center text-2xl">
+                                {% if item.reward.reward_type == 'badge' %}🛡️{% else %}🎁{% endif %}
+                            </div>
+                            <div>
+                                <div class="font-bold text-gray-900">{{ item.reward.name }}</div>
+                                <div class="text-sm text-gray-600">{{ item.reward.description }}</div>
+                                <div class="text-xs text-gray-400 mt-1">Earned: {{ item.earned_at|date:"M d, Y" }}</div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center py-12 bg-gray-50 rounded-xl border-dashed border-2 border-gray-200">
+                        <div class="text-4xl mb-3">🕸️</div>
+                        <p class="text-gray-500 font-medium">No rewards earned yet.</p>
+                        <p class="text-sm text-gray-400">Complete challenges to earn badges!</p>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Redemption History -->
+            <div class="bg-white rounded-2xl shadow-lg p-6">
+                <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                    <span>🎟️</span> Redeemed Vouchers
+                </h3>
+
+                {% if redemptions %}
+                    <div class="space-y-4">
+                        {% for redemption in redemptions %}
+                        <div class="flex items-center justify-between p-4 rounded-xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-2xl">
+                                    🎫
+                                </div>
+                                <div>
+                                    <div class="font-bold text-gray-900">{{ redemption.voucher.title }}</div>
+                                    <div class="text-sm text-gray-500 font-mono bg-gray-100 px-2 py-0.5 rounded inline-block mt-1">
+                                        {{ redemption.voucher.code }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="font-bold text-red-500">-{{ redemption.coins_spent }} 🪙</div>
+                                <div class="text-xs text-gray-400">{{ redemption.redeemed_at|date:"M d, Y" }}</div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center py-12 bg-gray-50 rounded-xl border-dashed border-2 border-gray-200">
+                        <div class="text-4xl mb-3">🛍️</div>
+                        <p class="text-gray-500 font-medium">No items redeemed yet.</p>
+                        <a href="{% url 'rewards:marketplace' %}" class="text-orange-500 hover:underline text-sm font-semibold mt-2 inline-block">Go spending!</a>
+                    </div>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,30 +1,117 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block title %}Contest Details - CompileMate{% endblock %}
+
 {% block content %}
-<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8">
-  <div class="max-w-4xl mx-auto px-4">
-    <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
-      <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ contest.title|default:'Contest Title' }}</h1>
-      <div class="flex flex-wrap gap-4 mb-4">
-        <span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-semibold">{{ contest.status|default:'Ongoing' }}</span>
-        <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">Difficulty: {{ contest.difficulty|default:'Medium' }}</span>
-        <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-semibold">Problems: {{ contest.num_problems|default:'5' }}</span>
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+      <!-- Banner/Header -->
+      <div class="bg-gradient-to-r from-blue-600 to-indigo-700 p-8 text-white relative">
+        <div class="absolute top-0 right-0 p-4 opacity-10">
+            <svg class="w-32 h-32" fill="currentColor" viewBox="0 0 20 20"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"></path></svg>
+        </div>
+        <h1 class="text-4xl font-extrabold mb-2 relative z-10">{{ contest.title }}</h1>
+        <div class="flex flex-wrap gap-3 relative z-10">
+            <span class="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold border border-white/30">
+                {{ contest.get_status_display }}
+            </span>
+            <span class="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold border border-white/30">
+                Difficulty: {{ contest.get_difficulty_display }}
+            </span>
+            <span class="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold border border-white/30">
+                {{ contest.contestproblem_set.count }} Problems
+            </span>
+        </div>
       </div>
-      <p class="text-gray-700 mb-6">{{ contest.description|default:'Contest description goes here.' }}</p>
-      <div class="mb-6">
-        <h2 class="text-xl font-semibold text-gray-800 mb-2">Rules</h2>
-        <ul class="list-disc list-inside text-gray-700 space-y-1">
-          <li>No plagiarism or cheating</li>
-          <li>One account per participant</li>
-          <li>Respect contest start and end times</li>
-        </ul>
-      </div>
-      <div class="flex gap-4">
-        <button class="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition">Join Contest</button>
-        <button class="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-300 transition">View Problems</button>
+
+      <div class="p-8">
+        <!-- Description -->
+        <div class="prose max-w-none text-gray-700 mb-8">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Description</h3>
+            <p>{{ contest.description|linebreaks }}</p>
+        </div>
+
+        <!-- Rules -->
+        <div class="bg-gray-50 rounded-xl p-6 mb-8 border border-gray-100">
+            <h3 class="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                Rules & Information
+            </h3>
+            <ul class="space-y-2 text-gray-600 list-disc list-inside">
+                <li>Start Time: <span class="font-semibold">{{ contest.start_time }}</span></li>
+                <li>End Time: <span class="font-semibold">{{ contest.end_time }}</span></li>
+                <li>Duration: <span class="font-semibold">{{ contest.duration }}</span></li>
+                <li>No plagiarism or cheating allowed.</li>
+                <li>Decisions by the judges are final.</li>
+            </ul>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex gap-4 items-center border-t border-gray-100 pt-6">
+            {% if is_participating %}
+                <a href="{% url 'contests:contest_problems' contest.slug %}" class="flex-1 bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-xl font-bold text-lg text-center shadow-lg transition-transform transform hover:scale-[1.02]">
+                    Enter Contest Area 🚀
+                </a>
+            {% else %}
+                {% if contest.is_ended %}
+                    <button disabled class="flex-1 bg-gray-300 text-gray-500 px-8 py-4 rounded-xl font-bold text-lg cursor-not-allowed text-center">
+                        Contest Ended
+                    </button>
+                {% elif not contest.allow_registration %}
+                    <button disabled class="flex-1 bg-gray-300 text-gray-500 px-8 py-4 rounded-xl font-bold text-lg cursor-not-allowed text-center">
+                        Registration Closed
+                    </button>
+                {% else %}
+                    <form action="{% url 'contests:contest_register' contest.slug %}" method="POST" class="flex-1">
+                        {% csrf_token %}
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-bold text-lg text-center shadow-lg transition-transform transform hover:scale-[1.02]">
+                            Join Contest
+                        </button>
+                    </form>
+                {% endif %}
+            {% endif %}
+
+            <a href="{% url 'contests:contest_list' %}" class="px-6 py-4 rounded-xl font-semibold text-gray-600 hover:bg-gray-100 border border-gray-200 transition-colors">
+                Back to List
+            </a>
+        </div>
       </div>
     </div>
+
+    <!-- Leaderboard Preview -->
+    {% if leaderboard %}
+    <div class="mt-8 bg-white rounded-2xl shadow-lg p-6">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-bold text-gray-900">Current Leaderboard</h2>
+            <a href="{% url 'contests:contest_leaderboard' contest.slug %}" class="text-blue-600 hover:text-blue-700 font-semibold flex items-center gap-1">
+                View Full Leaderboard
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </a>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead>
+                    <tr class="text-left text-gray-500 border-b border-gray-100">
+                        <th class="pb-3 pl-4">Rank</th>
+                        <th class="pb-3">User</th>
+                        <th class="pb-3 text-right pr-4">Score</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-50">
+                    {% for entry in leaderboard|slice:":5" %}
+                    <tr>
+                        <td class="py-3 pl-4 font-bold text-gray-700">#{{ entry.rank }}</td>
+                        <td class="py-3 font-medium text-gray-900">{{ entry.user.username }}</td>
+                        <td class="py-3 text-right pr-4 font-mono text-blue-600">{{ entry.score }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
   </div>
 </div>
-{% endblock %} 
+{% endblock %}

@@ -215,6 +215,13 @@ DATABASES = {
 
 7. **Run Migrations**
 
+commands for postgres start:
+
+brew services start postgresql@16
+brew services restart postgresql@16
+brew services stop postgresql@16
+brew services list
+
 ```bash
 python manage.py migrate
 ```

@@ -82,6 +82,16 @@ class WebRTCSignalingConsumer(AsyncWebsocketConsumer):
                 await self.handle_ice_candidate(data)
             elif message_type == 'join_room':
                 await self.handle_join_room(data)
+            elif message_type == 'code_change':
+                await self.handle_code_change(data)
+            elif message_type == 'cursor_position':
+                await self.handle_cursor_position(data)
+            elif message_type == 'whiteboard_draw':
+                await self.handle_whiteboard_draw(data)
+            elif message_type == 'whiteboard_clear':
+                await self.handle_whiteboard_clear(data)
+            elif message_type == 'chat_message':
+                await self.handle_chat_message(data)
             else:
                 logger.warning(f"Unknown message type: {message_type}")
         
@@ -89,6 +99,71 @@ class WebRTCSignalingConsumer(AsyncWebsocketConsumer):
             logger.error("Failed to decode JSON message")
         except Exception as e:
             logger.error(f"Error handling message: {str(e)}")
+    
+    # Mode Handlers
+    
+    async def handle_code_change(self, data):
+        """Handle code editor changes"""
+        await self.channel_layer.group_send(
+            self.room_group_name,
+            {
+                'type': 'code_update',
+                'code': data.get('code'),
+                'language': data.get('language'),
+                'from_user': self.user.username if self.user.is_authenticated else 'Anonymous',
+                'from_channel': self.channel_name
+            }
+        )
+
+    async def handle_cursor_position(self, data):
+        """Handle execution cursor position"""
+        await self.channel_layer.group_send(
+            self.room_group_name,
+            {
+                'type': 'cursor_update',
+                'position': data.get('position'),
+                'from_user': self.user.username if self.user.is_authenticated else 'Anonymous',
+                'from_channel': self.channel_name
+            }
+        )
+
+    async def handle_whiteboard_draw(self, data):
+        """Handle whiteboard drawing events"""
+        await self.channel_layer.group_send(
+            self.room_group_name,
+            {
+                'type': 'draw_event',
+                'draw_data': data.get('draw_data'),
+                'from_channel': self.channel_name
+            }
+        )
+
+    async def handle_whiteboard_clear(self, data):
+        """Handle whiteboard clear event"""
+        await self.channel_layer.group_send(
+            self.room_group_name,
+            {
+                'type': 'clear_board_event',
+                'from_channel': self.channel_name
+            }
+        )
+
+    async def handle_chat_message(self, data):
+        """Handle chat messages"""
+        # Save to DB if needed, for now just broadcast
+        message = data.get('message')
+        if message:
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'type': 'new_chat_message',
+                    'message': message,
+                    'username': self.user.username if self.user.is_authenticated else 'Anonymous',
+                    'timestamp': 'Just now'  # You can format actual time
+                }
+            )
+
+    # WebRTC Handlers (Existing)
     
     async def handle_offer(self, data):
         """Handle WebRTC offer"""
@@ -165,8 +240,51 @@ class WebRTCSignalingConsumer(AsyncWebsocketConsumer):
             'message': 'Joined room successfully'
         }))
     
-    # Handlers for receiving messages from channel layer
+    # Channel Layer Event Handlers
     
+    async def code_update(self, event):
+        """Broadcast code updates"""
+        if event['from_channel'] != self.channel_name:
+            await self.send(text_data=json.dumps({
+                'type': 'code_update',
+                'code': event['code'],
+                'language': event.get('language'),
+                'from_user': event['from_user']
+            }))
+
+    async def cursor_update(self, event):
+        """Broadcast cursor updates"""
+        if event['from_channel'] != self.channel_name:
+            await self.send(text_data=json.dumps({
+                'type': 'cursor_update',
+                'position': event['position'],
+                'from_user': event['from_user']
+            }))
+
+    async def draw_event(self, event):
+        """Broadcast drawing events"""
+        if event['from_channel'] != self.channel_name:
+            await self.send(text_data=json.dumps({
+                'type': 'draw_event',
+                'draw_data': event['draw_data']
+            }))
+
+    async def clear_board_event(self, event):
+        """Broadcast clear board event"""
+        if event['from_channel'] != self.channel_name:
+            await self.send(text_data=json.dumps({
+                'type': 'clear_board_event'
+            }))
+
+    async def new_chat_message(self, event):
+        """Broadcast chat messages"""
+        await self.send(text_data=json.dumps({
+            'type': 'new_chat_message',
+            'message': event['message'],
+            'username': event['username'],
+            'timestamp': event['timestamp']
+        }))
+
     async def user_joined(self, event):
         """Send user joined notification"""
         # Don't send to self

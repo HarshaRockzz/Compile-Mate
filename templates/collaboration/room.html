@@ -9,6 +9,7 @@
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 1rem;
     }
+
     .video-container {
         position: relative;
         background: #1a1a1a;
@@ -16,67 +17,76 @@
         overflow: hidden;
         aspect-ratio: 16/9;
     }
+
     video {
         width: 100%;
         height: 100%;
         object-fit: cover;
     }
+
     .canvas-container {
         border: 2px solid #e5e7eb;
         border-radius: 1rem;
         background: white;
         display: inline-block;
     }
+
     #whiteboard {
         cursor: crosshair;
         display: block;
         background: white;
         touch-action: none;
     }
-    
+
     #whiteboard:active {
         cursor: pointer;
     }
+
     .tool-btn {
         padding: 0.75rem;
         border-radius: 0.5rem;
         transition: all 0.2s;
         cursor: pointer;
     }
+
     .tool-btn:hover {
         transform: scale(1.05);
     }
+
     .tool-btn.active {
         background: #f97316 !important;
         color: white !important;
     }
+
     #editor {
         height: 600px;
         border-radius: 1rem;
         overflow: hidden;
         border: 2px solid #374151;
     }
-    
+
     /* Collaboration Room Mobile Styles */
     @media (max-width: 768px) {
-        #editor, #output {
+
+        #editor,
+        #output {
             height: 350px !important;
         }
-        
+
         .video-grid {
             grid-template-columns: 1fr !important;
         }
-        
+
         #whiteboard {
             max-width: 100% !important;
         }
     }
-    
+
     @media (max-width: 640px) {
         .flex.justify-center.gap-4.mb-6 {
             flex-wrap: wrap;
         }
-        
+
         .flex.justify-center.gap-4.mb-6 button {
             flex: 1 1 45%;
             min-width: 100px;
@@ -104,7 +114,8 @@
                         <span class="w-2 h-2 bg-gray-400 rounded-full"></span>
                         <span class="text-sm text-gray-400">Not connected</span>
                     </span>
-                    <a href="{% url 'collaboration:leave' room.room_id %}" class="bg-red-600 text-white px-6 py-2 rounded-xl font-semibold hover:bg-red-700 transition">
+                    <a href="{% url 'collaboration:leave' room.room_id %}"
+                        class="bg-red-600 text-white px-6 py-2 rounded-xl font-semibold hover:bg-red-700 transition">
                         Leave Room
                     </a>
                 </div>
@@ -115,21 +126,46 @@
     <div class="max-w-[2000px] mx-auto px-6 py-6" x-data="{ tab: 'video' }">
         <!-- Tab Navigation -->
         <div class="flex gap-2 mb-6 bg-gray-800 p-2 rounded-2xl">
-            <button @click="tab = 'video'" :class="tab === 'video' ? 'bg-orange-600' : 'bg-transparent'" class="flex-1 py-3 px-6 rounded-xl text-white font-semibold transition flex items-center justify-center gap-2">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            <button @click="tab = 'video'" :class="tab === 'video' ? 'bg-orange-600' : 'bg-transparent'"
+                class="flex-1 py-3 px-6 rounded-xl text-white font-semibold transition flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
                 Video Call
             </button>
-            <button @click="tab = 'whiteboard'; setTimeout(initWhiteboard, 100);" :class="tab === 'whiteboard' ? 'bg-orange-600' : 'bg-transparent'" class="flex-1 py-3 px-6 rounded-xl text-white font-semibold transition flex items-center justify-center gap-2">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+            <button @click="tab = 'whiteboard'; setTimeout(initWhiteboard, 100);"
+                :class="tab === 'whiteboard' ? 'bg-orange-600' : 'bg-transparent'"
+                class="flex-1 py-3 px-6 rounded-xl text-white font-semibold transition flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                </svg>
                 Whiteboard
             </button>
-            <button @click="tab = 'code'" :class="tab === 'code' ? 'bg-orange-600' : 'bg-transparent'" class="flex-1 py-3 px-6 rounded-xl text-white font-semibold transition flex items-center justify-center gap-2">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+            <button @click="tab = 'code'" :class="tab === 'code' ? 'bg-orange-600' : 'bg-transparent'"
+                class="flex-1 py-3 px-6 rounded-xl text-white font-semibold transition flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                </svg>
                 Live Code
             </button>
-            <button @click="tab = 'screen'" :class="tab === 'screen' ? 'bg-orange-600' : 'bg-transparent'" class="flex-1 py-3 px-6 rounded-xl text-white font-semibold transition flex items-center justify-center gap-2">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            <button @click="tab = 'screen'" :class="tab === 'screen' ? 'bg-orange-600' : 'bg-transparent'"
+                class="flex-1 py-3 px-6 rounded-xl text-white font-semibold transition flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
                 Screen Share
+            </button>
+            <button @click="tab = 'chat'" :class="tab === 'chat' ? 'bg-orange-600' : 'bg-transparent'"
+                class="flex-1 py-3 px-6 rounded-xl text-white font-semibold transition flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                </svg>
+                Group Chat
             </button>
         </div>
 
@@ -138,24 +174,39 @@
             <!-- Video Call Tab -->
             <div x-show="tab === 'video'" class="space-y-6">
                 <div class="flex justify-center gap-4 mb-6">
-                    <button id="toggleVideo" class="tool-btn bg-green-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-green-700 transition flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                    <button id="toggleVideo"
+                        class="tool-btn bg-green-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-green-700 transition flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                        </svg>
                         Camera ON
                     </button>
-                    <button id="toggleAudio" class="tool-btn bg-green-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-green-700 transition flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+                    <button id="toggleAudio"
+                        class="tool-btn bg-green-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-green-700 transition flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                        </svg>
                         Mic ON
                     </button>
-                    <button id="startCall" class="tool-btn bg-orange-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-orange-700 transition flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <button id="startCall"
+                        class="tool-btn bg-orange-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-orange-700 transition flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
                         Start Video
                     </button>
                 </div>
-                
+
                 <div id="videoGrid" class="video-grid">
                     <div class="video-container">
                         <video id="localVideo" autoplay muted playsinline></video>
-                        <div class="absolute bottom-4 left-4 bg-black/70 text-white px-3 py-1 rounded-lg text-sm font-semibold">
+                        <div
+                            class="absolute bottom-4 left-4 bg-black/70 text-white px-3 py-1 rounded-lg text-sm font-semibold">
                             You
                         </div>
                     </div>
@@ -165,50 +216,59 @@
 
             <!-- Whiteboard Tab -->
             <div x-show="tab === 'whiteboard'" class="space-y-4">
-                <div class="bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/30 rounded-xl p-4 mb-4">
+                <div
+                    class="bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/30 rounded-xl p-4 mb-4">
                     <div class="flex items-center gap-3">
                         <div class="bg-purple-500 rounded-full p-2">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                             </svg>
                         </div>
                         <div>
                             <h3 class="text-white font-semibold">Interactive Whiteboard</h3>
-                            <p class="text-gray-400 text-sm">Draw, sketch, and explain concepts visually! Click and drag to draw.</p>
+                            <p class="text-gray-400 text-sm">Draw, sketch, and explain concepts visually! Click and drag
+                                to draw.</p>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="flex justify-between items-center mb-4 bg-gray-700 p-4 rounded-xl">
                     <div class="flex gap-3 flex-wrap items-center">
-                        <button id="penTool" class="tool-btn bg-gray-600 text-white active px-4 py-2 font-semibold flex items-center gap-2">
+                        <button id="penTool"
+                            class="tool-btn bg-gray-600 text-white active px-4 py-2 font-semibold flex items-center gap-2">
                             🖊️ Pen
                         </button>
-                        <button id="eraserTool" class="tool-btn bg-gray-600 text-white px-4 py-2 font-semibold flex items-center gap-2">
+                        <button id="eraserTool"
+                            class="tool-btn bg-gray-600 text-white px-4 py-2 font-semibold flex items-center gap-2">
                             🧹 Eraser
                         </button>
                         <div class="flex items-center gap-2">
                             <label class="text-white text-sm font-semibold">Color:</label>
-                            <input type="color" id="colorPicker" value="#000000" class="w-12 h-12 rounded-lg cursor-pointer border-2 border-gray-500">
+                            <input type="color" id="colorPicker" value="#000000"
+                                class="w-12 h-12 rounded-lg cursor-pointer border-2 border-gray-500">
                         </div>
                         <div class="flex items-center gap-2">
                             <label class="text-white text-sm font-semibold">Size:</label>
                             <input type="range" id="brushSize" min="1" max="20" value="3" class="w-32">
-                            <span id="brushSizeLabel" class="text-white text-sm font-semibold bg-gray-600 px-3 py-1 rounded-lg min-w-[40px] text-center">3</span>
+                            <span id="brushSizeLabel"
+                                class="text-white text-sm font-semibold bg-gray-600 px-3 py-1 rounded-lg min-w-[40px] text-center">3</span>
                         </div>
-                        <button id="clearBoard" class="tool-btn bg-red-600 hover:bg-red-700 text-white px-4 py-2 font-semibold flex items-center gap-2">
+                        <button id="clearBoard"
+                            class="tool-btn bg-red-600 hover:bg-red-700 text-white px-4 py-2 font-semibold flex items-center gap-2">
                             🗑️ Clear All
                         </button>
                     </div>
                 </div>
-                
+
                 <div class="canvas-container shadow-2xl">
                     <canvas id="whiteboard" width="1400" height="700"></canvas>
                 </div>
-                
+
                 <div class="bg-gray-700 p-3 rounded-xl text-center">
                     <p class="text-gray-400 text-sm">
-                        💡 <span class="text-white font-semibold">Tip:</span> Click and drag on the canvas to start drawing. Use the eraser to remove strokes.
+                        💡 <span class="text-white font-semibold">Tip:</span> Click and drag on the canvas to start
+                        drawing. Use the eraser to remove strokes.
                     </p>
                 </div>
             </div>
@@ -218,54 +278,72 @@
                 <div class="flex justify-between items-center mb-4 bg-gray-700 p-4 rounded-xl">
                     <div class="flex items-center gap-3">
                         <label class="text-white text-sm font-semibold">Language:</label>
-                        <select id="language" class="px-4 py-2 bg-gray-600 text-white rounded-lg border border-gray-500 font-semibold">
+                        <select id="language"
+                            class="px-4 py-2 bg-gray-600 text-white rounded-lg border border-gray-500 font-semibold">
                             <option value="python">🐍 Python</option>
                             <option value="javascript">📜 JavaScript</option>
                             <option value="cpp">⚡ C++</option>
                             <option value="java">☕ Java</option>
                         </select>
                     </div>
-                    <button id="runCode" class="bg-green-600 hover:bg-green-700 text-white px-8 py-2.5 rounded-xl font-semibold transition flex items-center gap-2 shadow-lg">
+                    <button id="runCode"
+                        class="bg-green-600 hover:bg-green-700 text-white px-8 py-2.5 rounded-xl font-semibold transition flex items-center gap-2 shadow-lg">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+                            <path fill-rule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                                clip-rule="evenodd" />
                         </svg>
                         Run Code
                     </button>
                 </div>
-                
+
                 <!-- Side by Side Layout -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <!-- Left Side: Editor -->
-                    <div class="bg-gray-900 rounded-xl overflow-hidden border-2 border-gray-700">
+                    <div class="bg-gray-900 rounded-xl overflow-hidden border-2 border-gray-700 flex flex-col">
                         <div class="bg-gray-800 px-4 py-2 border-b border-gray-700 flex items-center justify-between">
                             <span class="text-white text-sm font-semibold flex items-center gap-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                                 </svg>
                                 Code Editor
                             </span>
                             <span class="text-gray-400 text-xs">Write your code here</span>
                         </div>
-                        <div id="editor" style="height: 600px;"></div>
+                        <div id="editor" class="flex-1 min-h-[400px]"></div>
+
+                        <!-- Custom Input Section -->
+                        <div class="bg-gray-800 border-t border-gray-700 p-2">
+                            <label class="text-gray-400 text-xs font-semibold mb-1 block">Custom Input</label>
+                            <textarea id="customInput"
+                                class="w-full bg-gray-900 text-white rounded-lg border border-gray-600 p-2 text-sm font-mono h-24 focus:outline-none focus:border-blue-500"
+                                placeholder="Enter input for your code..."></textarea>
+                        </div>
                     </div>
-                    
+
                     <!-- Right Side: Output -->
                     <div class="bg-gray-900 rounded-xl overflow-hidden border-2 border-gray-700">
                         <div class="bg-gray-800 px-4 py-2 border-b border-gray-700 flex items-center justify-between">
                             <span class="text-white text-sm font-semibold flex items-center gap-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                 </svg>
                                 Output
                             </span>
                             <span id="executionStatus" class="text-gray-400 text-xs">Ready to run</span>
                         </div>
-                        <div id="output" class="text-green-400 p-4 font-mono text-sm overflow-y-auto" style="height: 600px;">
+                        <div id="output" class="text-green-400 p-4 font-mono text-sm overflow-y-auto"
+                            style="height: 600px;">
                             <div class="flex items-center justify-center h-full text-gray-500">
                                 <div class="text-center">
-                                    <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
                                     <p class="text-sm">Click "Run Code" to see output here</p>
                                     <p class="text-xs mt-2 opacity-75">Results will appear instantly</p>
@@ -279,17 +357,63 @@
             <!-- Screen Share Tab -->
             <div x-show="tab === 'screen'" class="space-y-4">
                 <div class="flex justify-center gap-4 mb-6">
-                    <button id="startScreenShare" class="bg-blue-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-blue-700 transition flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    <button id="startScreenShare"
+                        class="bg-blue-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-blue-700 transition flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
                         Start Screen Share
                     </button>
-                    <button id="stopScreenShare" class="bg-red-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-red-700 transition hidden flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"/></svg>
+                    <button id="stopScreenShare"
+                        class="bg-red-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-red-700 transition hidden flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z" />
+                        </svg>
                         Stop Sharing
                     </button>
                 </div>
                 <div class="video-container" style="aspect-ratio: 16/9;">
                     <video id="screenVideo" autoplay playsinline class="w-full h-full"></video>
+                </div>
+            </div>
+
+            <!-- Chat Tab -->
+            <div x-show="tab === 'chat'"
+                class="h-[600px] flex flex-col bg-gray-900 rounded-xl overflow-hidden border border-gray-700">
+                <div class="p-4 bg-gray-800 border-b border-gray-700">
+                    <h3 class="text-white font-semibold flex items-center gap-2">
+                        <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+                        </svg>
+                        Room Chat
+                    </h3>
+                </div>
+
+                <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-4">
+                    <!-- Messages will appear here -->
+                    <div class="text-center text-gray-500 text-sm py-4">
+                        Welcome to the chat! 👋
+                    </div>
+                </div>
+
+                <div class="p-4 bg-gray-800 border-t border-gray-700">
+                    <form id="chatForm" class="flex gap-2">
+                        <input type="text" id="chatInput"
+                            class="flex-1 bg-gray-700 text-white rounded-lg px-4 py-2 border border-gray-600 focus:outline-none focus:border-blue-500"
+                            placeholder="Type a message...">
+                        <button type="submit"
+                            class="bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 transition">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                            </svg>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -298,800 +422,952 @@
 
 <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
 <script>
-console.log('🚀 CompileMate Collaboration Room Loaded!');
+    console.log('🚀 CompileMate Collaboration Room Loaded!');
 
-// ==================== MONACO EDITOR ====================
-let editorInstance = null;
-setTimeout(() => {
-    try {
-        require.config({ paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs' } });
-        require(['vs/editor/editor.main'], function () {
-            editorInstance = monaco.editor.create(document.getElementById('editor'), {
-                value: '# Write your Python code here\nprint("Hello from CompileMate!")\n\nfor i in range(5):\n    print(f"Number: {i}")',
-                language: 'python',
-                theme: 'vs-dark',
-                fontSize: 16,
-                minimap: { enabled: false },
-                automaticLayout: true,
-                scrollBeyondLastLine: false
+    // ==================== MONACO EDITOR ====================
+    let editorInstance = null;
+    let isRemoteChange = false; // Flag to prevent loops
+
+    setTimeout(() => {
+        try {
+            require.config({ paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs' } });
+            require(['vs/editor/editor.main'], function () {
+                editorInstance = monaco.editor.create(document.getElementById('editor'), {
+                    value: '# Write your Python code here\nprint("Hello from CompileMate!")\n\nfor i in range(5):\n    print(f"Number: {i}")',
+                    language: 'python',
+                    theme: 'vs-dark',
+                    fontSize: 16,
+                    minimap: { enabled: false },
+                    automaticLayout: true,
+                    scrollBeyondLastLine: false
+                });
+                console.log('✅ Monaco Editor loaded!');
+
+                // Listen for changes
+                editorInstance.onDidChangeModelContent((e) => {
+                    if (!isRemoteChange && webSocket && webSocket.readyState === WebSocket.OPEN) {
+                        webSocket.send(JSON.stringify({
+                            type: 'code_change',
+                            code: editorInstance.getValue(),
+                            language: document.getElementById('language').value
+                        }));
+                    }
+                });
             });
-            console.log('✅ Monaco Editor loaded!');
-        });
-    } catch (err) {
-        console.error('❌ Monaco Editor error:', err);
-    }
-}, 500);
+        } catch (err) {
+            console.error('❌ Monaco Editor error:', err);
+        }
+    }, 500);
 
-// Language change
-document.getElementById('language').addEventListener('change', (e) => {
-    if (editorInstance) {
-        const lang = e.target.value;
-        monaco.editor.setModelLanguage(editorInstance.getModel(), lang);
-        
-        // Set starter code for each language
-        const templates = {
-            python: '# Python code\nprint("Hello from Python!")\n',
-            javascript: '// JavaScript code\nconsole.log("Hello from JavaScript!");\n',
-            cpp: '// C++ code\n#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << "Hello from C++!" << endl;\n    return 0;\n}\n',
-            java: '// Java code\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello from Java!");\n    }\n}\n'
-        };
-        editorInstance.setValue(templates[lang] || '');
-    }
-});
+    // Language change
+    document.getElementById('language').addEventListener('change', (e) => {
+        if (editorInstance) {
+            const lang = e.target.value;
+            monaco.editor.setModelLanguage(editorInstance.getModel(), lang);
 
-// Run Code
-document.getElementById('runCode').addEventListener('click', () => {
-    if (editorInstance) {
-        const code = editorInstance.getValue();
-        const output = document.getElementById('output');
-        const status = document.getElementById('executionStatus');
-        
-        // Show executing status
-        status.textContent = 'Executing...';
-        status.className = 'text-yellow-400 text-xs animate-pulse';
-        output.innerHTML = `
+            // Notify others of language change (sending current code but update lang)
+            if (webSocket && webSocket.readyState === WebSocket.OPEN) {
+                webSocket.send(JSON.stringify({
+                    type: 'code_change',
+                    code: editorInstance.getValue(),
+                    language: lang
+                }));
+            }
+        }
+    });
+
+    // Run Code (REAL EXECUTION)
+    document.getElementById('runCode').addEventListener('click', async () => {
+        if (editorInstance) {
+            const code = editorInstance.getValue();
+            const lang = document.getElementById('language').value;
+            const customInput = document.getElementById('customInput').value; // Get input
+            const output = document.getElementById('output');
+            const status = document.getElementById('executionStatus');
+
+            // Show executing status
+            status.textContent = 'Executing...';
+            status.className = 'text-yellow-400 text-xs animate-pulse';
+            output.innerHTML = `
             <div class="text-yellow-400">
                 <div class="flex items-center gap-2 mb-3">
                     <svg class="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                     </svg>
-                    <span class="font-semibold">Executing code...</span>
+                    <span class="font-semibold">Running on Server...</span>
                 </div>
-                <div class="text-gray-400 text-xs mb-2">Running Python code</div>
             </div>
         `;
-        
-        // Simulate execution delay
-        setTimeout(() => {
-            status.textContent = 'Executed successfully';
-            status.className = 'text-green-400 text-xs';
-            
-            output.innerHTML = `
-                <div class="space-y-3">
-                    <div class="bg-gray-800 p-3 rounded-lg border border-gray-700">
-                        <div class="text-blue-400 text-xs font-semibold mb-2 flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                            </svg>
-                            CODE
+
+            try {
+                const response = await fetch('{% url "judge:quick_test" %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: new URLSearchParams({
+                        'code': code,
+                        'language': lang,
+                        'input': customInput
+                    })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    status.textContent = 'Executed successfully';
+                    status.className = 'text-green-400 text-xs';
+
+                    const isError = result.status !== 'Accepted';
+                    const outputColor = isError ? 'text-red-400' : 'text-green-400';
+                    const outputContent = result.stdout || result.stderr || result.compile_output || 'No output';
+
+                    output.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="bg-gray-800 p-3 rounded-lg border border-gray-700">
+                            <div class="text-blue-400 text-xs font-semibold mb-2 flex items-center gap-2">
+                                CODE
+                            </div>
+                            <pre class="text-gray-300 text-sm whitespace-pre-wrap">${code.slice(0, 200)}${code.length > 200 ? '...' : ''}</pre>
                         </div>
-                        <pre class="text-gray-300 text-sm whitespace-pre-wrap">${code}</pre>
-                    </div>
-                    
-                    <div class="bg-gray-800 p-3 rounded-lg border border-green-600/30">
-                        <div class="text-green-400 text-xs font-semibold mb-2 flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                            </svg>
-                            OUTPUT
+                        
+                        <div class="bg-gray-800 p-3 rounded-lg border ${isError ? 'border-red-600/30' : 'border-green-600/30'}">
+                            <div class="${outputColor} text-xs font-semibold mb-2 flex items-center gap-2">
+                                OUTPUT
+                            </div>
+                            <pre class="${outputColor} text-sm">${outputContent}</pre>
                         </div>
-                        <pre class="text-green-400 text-sm">Hello from CompileMate!
-Number: 0
-Number: 1
-Number: 2
-Number: 3
-Number: 4</pre>
+                        
+                        <div class="flex items-center justify-between text-xs bg-gray-800 p-2 rounded-lg">
+                            <span class="text-gray-400">⚡ Time: <span class="text-white font-semibold">${result.execution_time || '0.00'}s</span></span>
+                            <span class="text-gray-400">💾 Mem: <span class="text-white font-semibold">${result.memory_used || '0'} KB</span></span>
+                            <span class="${isError ? 'text-red-400' : 'text-green-400'} font-semibold">
+                                ${result.status}
+                            </span>
+                        </div>
                     </div>
-                    
-                    <div class="flex items-center justify-between text-xs bg-gray-800 p-2 rounded-lg">
-                        <span class="text-gray-400">⚡ Execution time: <span class="text-white font-semibold">0.05s</span></span>
-                        <span class="text-gray-400">💾 Memory used: <span class="text-white font-semibold">2.3 MB</span></span>
-                        <span class="text-green-400 font-semibold flex items-center gap-1">
-                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                            </svg>
-                            Success
-                        </span>
-                    </div>
-                </div>
-            `;
-            console.log('✅ Code executed successfully!');
-        }, 800);
-    }
-});
-
-// ==================== WHITEBOARD ====================
-let canvas, ctx, isDrawing, currentTool, currentColor, brushSize, lastX, lastY;
-let whiteboardInitialized = false;
-
-function initWhiteboard() {
-    // Prevent multiple initializations
-    if (whiteboardInitialized) {
-        console.log('✅ Whiteboard already initialized');
-        return;
-    }
-    
-    canvas = document.getElementById('whiteboard');
-    if (!canvas) {
-        console.log('⏳ Canvas not ready, will retry...');
-        setTimeout(initWhiteboard, 200);
-        return;
-    }
-    
-    ctx = canvas.getContext('2d');
-    isDrawing = false;
-    currentTool = 'pen';
-    currentColor = '#000000';
-    brushSize = 3;
-    lastX = 0;
-    lastY = 0;
-
-    // Set canvas background to white
-    ctx.fillStyle = '#FFFFFF';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    whiteboardInitialized = true;
-    console.log('✅ Whiteboard canvas initialized!', canvas.width, 'x', canvas.height);
-    
-    // Setup event listeners
-    setupWhiteboardEvents();
-}
-
-// Wait for DOM and Alpine.js to be ready
-document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(initWhiteboard, 500);
-});
-
-function setupWhiteboardEvents() {
-    if (!canvas) return;
-    
-    // Mouse events
-    canvas.addEventListener('mousedown', startDrawing);
-    canvas.addEventListener('mousemove', draw);
-    canvas.addEventListener('mouseup', stopDrawing);
-    canvas.addEventListener('mouseleave', stopDrawing);
-
-    // Touch support for mobile
-    canvas.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        const touch = e.touches[0];
-        const rect = canvas.getBoundingClientRect();
-        lastX = touch.clientX - rect.left;
-        lastY = touch.clientY - rect.top;
-        isDrawing = true;
-        console.log('✅ Touch started at:', lastX, lastY);
+                `;
+                } else {
+                    throw new Error(result.error || 'Execution failed');
+                }
+            } catch (error) {
+                console.error(error);
+                status.textContent = 'Error';
+                status.className = 'text-red-400 text-xs';
+                output.innerHTML = `<div class="text-red-400">Execution Error: ${error.message}</div>`;
+            }
+        }
     });
 
-    canvas.addEventListener('touchmove', (e) => {
-        if (!isDrawing) return;
-        e.preventDefault();
-        const touch = e.touches[0];
+    // ==================== WHITEBOARD ====================
+    let canvas, ctx, isDrawing, currentTool, currentColor, brushSize, lastX, lastY;
+    let whiteboardInitialized = false;
+
+    function initWhiteboard() {
+        // Prevent multiple initializations
+        if (whiteboardInitialized) {
+            console.log('✅ Whiteboard already initialized');
+            return;
+        }
+
+        canvas = document.getElementById('whiteboard');
+        if (!canvas) {
+            console.log('⏳ Canvas not ready, will retry...');
+            setTimeout(initWhiteboard, 200);
+            return;
+        }
+
+        ctx = canvas.getContext('2d');
+        isDrawing = false;
+        currentTool = 'pen';
+        currentColor = '#000000';
+        brushSize = 3;
+        lastX = 0;
+        lastY = 0;
+
+        // Set canvas background to white
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        whiteboardInitialized = true;
+        console.log('✅ Whiteboard canvas initialized!', canvas.width, 'x', canvas.height);
+
+        // Setup event listeners
+        setupWhiteboardEvents();
+    }
+
+    // Wait for DOM and Alpine.js to be ready
+    document.addEventListener('DOMContentLoaded', function () {
+        setTimeout(initWhiteboard, 500);
+    });
+
+    function setupWhiteboardEvents() {
+        if (!canvas) return;
+
+        // Mouse events
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseleave', stopDrawing);
+
+        // Touch support for mobile
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            lastX = touch.clientX - rect.left;
+            lastY = touch.clientY - rect.top;
+            isDrawing = true;
+            console.log('✅ Touch started at:', lastX, lastY);
+        });
+
+        canvas.addEventListener('touchmove', (e) => {
+            if (!isDrawing) return;
+            e.preventDefault();
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            const x = touch.clientX - rect.left;
+            const y = touch.clientY - rect.top;
+
+            ctx.lineWidth = brushSize;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.strokeStyle = currentTool === 'pen' ? currentColor : '#FFFFFF';
+
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(x, y);
+            ctx.stroke();
+
+            lastX = x;
+            lastY = y;
+        });
+
+        canvas.addEventListener('touchend', () => {
+            isDrawing = false;
+            console.log('✅ Touch ended');
+        });
+
+        // Tool buttons
+        const penBtn = document.getElementById('penTool');
+        const eraserBtn = document.getElementById('eraserTool');
+        const colorPicker = document.getElementById('colorPicker');
+        const brushSlider = document.getElementById('brushSize');
+        const clearBtn = document.getElementById('clearBoard');
+
+        if (penBtn) {
+            penBtn.addEventListener('click', function () {
+                currentTool = 'pen';
+                document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                console.log('✅ Pen tool selected');
+            });
+        }
+
+        if (eraserBtn) {
+            eraserBtn.addEventListener('click', function () {
+                currentTool = 'eraser';
+                document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                console.log('✅ Eraser tool selected');
+            });
+        }
+
+        if (colorPicker) {
+            colorPicker.addEventListener('change', (e) => {
+                currentColor = e.target.value;
+                console.log('✅ Color changed to:', currentColor);
+            });
+        }
+
+        if (brushSlider) {
+            brushSlider.addEventListener('input', (e) => {
+                brushSize = parseInt(e.target.value);
+                const label = document.getElementById('brushSizeLabel');
+                if (label) label.textContent = brushSize;
+                console.log('✅ Brush size:', brushSize);
+            });
+        }
+
+        if (clearBtn) {
+            clearBtn.addEventListener('click', () => {
+                if (ctx && canvas) {
+                    ctx.fillStyle = '#FFFFFF';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    console.log('🗑️ Board cleared!');
+
+                    // Broadcast clear event
+                    if (webSocket && webSocket.readyState === WebSocket.OPEN) {
+                        webSocket.send(JSON.stringify({ type: 'whiteboard_clear' }));
+                    }
+                }
+            });
+        }
+
+        // Add visual feedback when canvas is clicked for the first time
+        let firstDrawFeedback = true;
+        canvas.addEventListener('mousedown', function () {
+            if (firstDrawFeedback) {
+                console.log('🎨 Whiteboard is working perfectly! Draw away! ✨');
+                firstDrawFeedback = false;
+            }
+        }, { once: true });
+    }
+
+    function startDrawing(e) {
+        if (!ctx || !canvas) {
+            console.warn('⚠️ Canvas not initialized yet! Retrying...');
+            initWhiteboard();
+            return;
+        }
+        isDrawing = true;
+        isDrawing = true;
+
+        // Scale handling for start point
         const rect = canvas.getBoundingClientRect();
-        const x = touch.clientX - rect.left;
-        const y = touch.clientY - rect.top;
-        
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+
+        lastX = e.offsetX * scaleX;
+        lastY = e.offsetY * scaleY;
+
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        console.log('✏️ Started drawing at:', lastX, lastY, '| Tool:', currentTool, '| Color:', currentColor, '| Size:', brushSize);
+    }
+
+    // Whiteboard Drawing
+    function draw(e) {
+        if (!isDrawing || !ctx) return;
+
+        // Support both mouse and touch
+        const clientX = e.clientX || (e.touches ? e.touches[0].clientX : 0);
+        const clientY = e.clientY || (e.touches ? e.touches[0].clientY : 0);
+
+        const rect = canvas.getBoundingClientRect();
+        const x = clientX - rect.left;
+        const y = clientY - rect.top;
+
+        // Scale for canvas resolution vs display size
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+
+        const drawX = x * scaleX;
+        const drawY = y * scaleY;
+
+        // Local Draw
         ctx.lineWidth = brushSize;
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
         ctx.strokeStyle = currentTool === 'pen' ? currentColor : '#FFFFFF';
-        
+        if (currentTool === 'eraser') ctx.lineWidth = brushSize * 3;
+
         ctx.beginPath();
         ctx.moveTo(lastX, lastY);
-        ctx.lineTo(x, y);
+        ctx.lineTo(drawX, drawY);
         ctx.stroke();
-        
-        lastX = x;
-        lastY = y;
-    });
 
-    canvas.addEventListener('touchend', () => {
-        isDrawing = false;
-        console.log('✅ Touch ended');
-    });
-
-    // Tool buttons
-    const penBtn = document.getElementById('penTool');
-    const eraserBtn = document.getElementById('eraserTool');
-    const colorPicker = document.getElementById('colorPicker');
-    const brushSlider = document.getElementById('brushSize');
-    const clearBtn = document.getElementById('clearBoard');
-
-    if (penBtn) {
-        penBtn.addEventListener('click', function() {
-            currentTool = 'pen';
-            document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
-            this.classList.add('active');
-            console.log('✅ Pen tool selected');
-        });
-    }
-
-    if (eraserBtn) {
-        eraserBtn.addEventListener('click', function() {
-            currentTool = 'eraser';
-            document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
-            this.classList.add('active');
-            console.log('✅ Eraser tool selected');
-        });
-    }
-
-    if (colorPicker) {
-        colorPicker.addEventListener('change', (e) => {
-            currentColor = e.target.value;
-            console.log('✅ Color changed to:', currentColor);
-        });
-    }
-
-    if (brushSlider) {
-        brushSlider.addEventListener('input', (e) => {
-            brushSize = parseInt(e.target.value);
-            const label = document.getElementById('brushSizeLabel');
-            if (label) label.textContent = brushSize;
-            console.log('✅ Brush size:', brushSize);
-        });
-    }
-
-    if (clearBtn) {
-        clearBtn.addEventListener('click', () => {
-            if (ctx && canvas) {
-                ctx.fillStyle = '#FFFFFF';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                console.log('🗑️ Board cleared!');
-            }
-        });
-    }
-    
-    // Add visual feedback when canvas is clicked for the first time
-    let firstDrawFeedback = true;
-    canvas.addEventListener('mousedown', function() {
-        if (firstDrawFeedback) {
-            console.log('🎨 Whiteboard is working perfectly! Draw away! ✨');
-            firstDrawFeedback = false;
+        // Broadcast Draw Event
+        if (webSocket && webSocket.readyState === WebSocket.OPEN) {
+            webSocket.send(JSON.stringify({
+                type: 'whiteboard_draw',
+                draw_data: {
+                    x1: lastX,
+                    y1: lastY,
+                    x2: drawX,
+                    y2: drawY,
+                    color: currentTool === 'pen' ? currentColor : '#FFFFFF',
+                    width: ctx.lineWidth
+                }
+            }));
         }
-    }, { once: true });
-}
 
-function startDrawing(e) {
-    if (!ctx || !canvas) {
-        console.warn('⚠️ Canvas not initialized yet! Retrying...');
-        initWhiteboard();
-        return;
+        lastX = drawX;
+        lastY = drawY;
     }
-    isDrawing = true;
-    lastX = e.offsetX;
-    lastY = e.offsetY;
-    ctx.beginPath();
-    ctx.moveTo(lastX, lastY);
-    console.log('✏️ Started drawing at:', lastX, lastY, '| Tool:', currentTool, '| Color:', currentColor, '| Size:', brushSize);
-}
 
-function draw(e) {
-    if (!isDrawing || !ctx) return;
-    
-    const x = e.offsetX;
-    const y = e.offsetY;
-    
-    ctx.lineWidth = brushSize;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-    
-    if (currentTool === 'pen') {
-        ctx.strokeStyle = currentColor;
-    } else {
-        ctx.strokeStyle = '#FFFFFF';
-        ctx.lineWidth = brushSize * 3;
+    function stopDrawing() {
+        isDrawing = false;
     }
-    
-    ctx.beginPath();
-    ctx.moveTo(lastX, lastY);
-    ctx.lineTo(x, y);
-    ctx.stroke();
-    
-    lastX = x;
-    lastY = y;
-}
 
-function stopDrawing() {
-    if (isDrawing) {
-        console.log('✅ Stopped drawing');
+    function handleRemoteDraw(data) {
+        if (!ctx) return;
+
+        ctx.lineWidth = data.width;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.strokeStyle = data.color;
+
+        ctx.beginPath();
+        ctx.moveTo(data.x1, data.y1);
+        ctx.lineTo(data.x2, data.y2);
+        ctx.stroke();
     }
-    isDrawing = false;
-}
 
-// ==================== WEBRTC VIDEO CALL SYSTEM ====================
-/**
- * Complete WebRTC Implementation
- * - WebSocket signaling
- * - Peer-to-peer connections
- * - Multiple participants support
- * - ICE candidate exchange
- */
+    // ==================== WEBRTC VIDEO CALL SYSTEM ====================
+    /**
+     * Complete WebRTC Implementation
+     * - WebSocket signaling
+     * - Peer-to-peer connections
+     * - Multiple participants support
+     * - ICE candidate exchange
+     */
 
-// Configuration
-const ROOM_ID = '{{ room.room_id }}';
-const WS_PROTOCOL = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-const WS_URL = `${WS_PROTOCOL}//${window.location.host}/ws/webrtc/${ROOM_ID}/`;
+    // Configuration
+    const ROOM_ID = '{{ room.room_id }}';
+    const WS_PROTOCOL = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const WS_URL = `${WS_PROTOCOL}//${window.location.host}/ws/webrtc/${ROOM_ID}/`;
 
-// STUN servers (Google's free STUN servers)
-const ICE_SERVERS = {
-    iceServers: [
-        { urls: 'stun:stun.l.google.com:19302' },
-        { urls: 'stun:stun1.l.google.com:19302' },
-        { urls: 'stun:stun2.l.google.com:19302' }
-    ]
-};
-
-// WebRTC State
-let localStream = null;
-let webSocket = null;
-let peerConnections = {}; // Map of channel_name -> RTCPeerConnection
-let remoteStreams = {}; // Map of channel_name -> MediaStream
-let videoEnabled = true;
-let audioEnabled = true;
-let isCallActive = false;
-let myChannelName = null;
-
-// Initialize WebSocket Connection
-function initializeWebSocket() {
-    console.log('🔌 Connecting to WebSocket signaling server...');
-    updateConnectionStatus('connecting');
-    
-    webSocket = new WebSocket(WS_URL);
-    
-    webSocket.onopen = () => {
-        console.log('✅ WebSocket connected!');
-        console.log('📍 WebSocket URL:', WS_URL);
-        console.log('🏠 Room ID:', ROOM_ID);
-        updateConnectionStatus('connected');
-        webSocket.send(JSON.stringify({
-            type: 'join_room',
-            room_id: ROOM_ID
-        }));
-        console.log('✅ Joined room via WebSocket!');
+    // STUN servers (Google's free STUN servers)
+    const ICE_SERVERS = {
+        iceServers: [
+            { urls: 'stun:stun.l.google.com:19302' },
+            { urls: 'stun:stun1.l.google.com:19302' },
+            { urls: 'stun:stun2.l.google.com:19302' }
+        ]
     };
-    
-    webSocket.onmessage = async (event) => {
-        const data = JSON.parse(event.data);
-        await handleSignalingMessage(data);
-    };
-    
-    webSocket.onerror = (error) => {
-        console.error('❌ WebSocket error:', error);
-        console.error('🔍 WebSocket URL:', WS_URL);
-        console.error('🔍 Check if server is running and WebSocket endpoint exists');
-        updateConnectionStatus('error');
-        alert('⚠️ WebSocket Connection Failed!\n\nPlease make sure the server is running.\nCheck console for details.');
-    };
-    
-    webSocket.onclose = () => {
-        console.log('🔌 WebSocket disconnected');
-        updateConnectionStatus('disconnected');
-        // Attempt reconnection after 3 seconds
-        setTimeout(initializeWebSocket, 3000);
-    };
-}
 
-// Update connection status UI
-function updateConnectionStatus(status) {
-    const statusElement = document.getElementById('connectionStatus');
-    if (!statusElement) return;
-    
-    const dot = statusElement.querySelector('.w-2');
-    const text = statusElement.querySelector('.text-sm');
-    
-    switch(status) {
-        case 'connecting':
-            dot.className = 'w-2 h-2 bg-yellow-400 rounded-full animate-pulse';
-            text.textContent = 'Connecting...';
-            text.className = 'text-sm text-yellow-400';
-            break;
-        case 'connected':
-            dot.className = 'w-2 h-2 bg-green-400 rounded-full animate-pulse';
-            text.textContent = `WebRTC Ready (${Object.keys(peerConnections).length} peers)`;
-            text.className = 'text-sm text-green-400';
-            break;
-        case 'disconnected':
-            dot.className = 'w-2 h-2 bg-gray-400 rounded-full';
-            text.textContent = 'Disconnected';
-            text.className = 'text-sm text-gray-400';
-            break;
-        case 'error':
-            dot.className = 'w-2 h-2 bg-red-400 rounded-full';
-            text.textContent = 'Connection Error';
-            text.className = 'text-sm text-red-400';
-            break;
+    // WebRTC State
+    let localStream = null;
+    let webSocket = null;
+    let peerConnections = {}; // Map of channel_name -> RTCPeerConnection
+    let remoteStreams = {}; // Map of channel_name -> MediaStream
+    let videoEnabled = true;
+    let audioEnabled = true;
+    let isCallActive = false;
+    let myChannelName = null;
+
+    // Initialize WebSocket Connection
+    function initializeWebSocket() {
+        console.log('🔌 Connecting to WebSocket signaling server...');
+        updateConnectionStatus('connecting');
+
+        webSocket = new WebSocket(WS_URL);
+
+        webSocket.onopen = () => {
+            console.log('✅ WebSocket connected!');
+            console.log('📍 WebSocket URL:', WS_URL);
+            console.log('🏠 Room ID:', ROOM_ID);
+            updateConnectionStatus('connected');
+            webSocket.send(JSON.stringify({
+                type: 'join_room',
+                room_id: ROOM_ID
+            }));
+            console.log('✅ Joined room via WebSocket!');
+        };
+
+        webSocket.onmessage = async (event) => {
+            const data = JSON.parse(event.data);
+            await handleSignalingMessage(data);
+        };
+
+        webSocket.onerror = (error) => {
+            console.error('❌ WebSocket error:', error);
+            console.error('🔍 WebSocket URL:', WS_URL);
+            console.error('🔍 Check if server is running and WebSocket endpoint exists');
+            updateConnectionStatus('error');
+            alert('⚠️ WebSocket Connection Failed!\n\nPlease make sure the server is running.\nCheck console for details.');
+        };
+
+        webSocket.onclose = () => {
+            console.log('🔌 WebSocket disconnected');
+            updateConnectionStatus('disconnected');
+            // Attempt reconnection after 3 seconds
+            setTimeout(initializeWebSocket, 3000);
+        };
     }
-}
 
-// Handle incoming signaling messages
-async function handleSignalingMessage(data) {
-    console.log('📨 Received:', data.type, data);
-    
-    switch(data.type) {
-        case 'user_joined':
-            await handleUserJoined(data);
-            break;
-        case 'user_left':
-            handleUserLeft(data);
-            break;
-        case 'offer':
-            await handleOffer(data);
-            break;
-        case 'answer':
-            await handleAnswer(data);
-            break;
-        case 'ice_candidate':
-            await handleIceCandidate(data);
-            break;
-        default:
-            console.log('Unknown message type:', data.type);
+    // Update connection status UI
+    function updateConnectionStatus(status) {
+        const statusElement = document.getElementById('connectionStatus');
+        if (!statusElement) return;
+
+        const dot = statusElement.querySelector('.w-2');
+        const text = statusElement.querySelector('.text-sm');
+
+        switch (status) {
+            case 'connecting':
+                dot.className = 'w-2 h-2 bg-yellow-400 rounded-full animate-pulse';
+                text.textContent = 'Connecting...';
+                text.className = 'text-sm text-yellow-400';
+                break;
+            case 'connected':
+                dot.className = 'w-2 h-2 bg-green-400 rounded-full animate-pulse';
+                text.textContent = `WebRTC Ready (${Object.keys(peerConnections).length} peers)`;
+                text.className = 'text-sm text-green-400';
+                break;
+            case 'disconnected':
+                dot.className = 'w-2 h-2 bg-gray-400 rounded-full';
+                text.textContent = 'Disconnected';
+                text.className = 'text-sm text-gray-400';
+                break;
+            case 'error':
+                dot.className = 'w-2 h-2 bg-red-400 rounded-full';
+                text.textContent = 'Connection Error';
+                text.className = 'text-sm text-red-400';
+                break;
+        }
     }
-}
 
-// Handle new user joining
-async function handleUserJoined(data) {
-    console.log('👤 User joined:', data.username);
-    
-    if (isCallActive && localStream) {
-        // Create peer connection for new user and send offer
-        const peerConnection = createPeerConnection(data.channel_name);
-        
-        // Add local stream tracks
-        localStream.getTracks().forEach(track => {
-            peerConnection.addTrack(track, localStream);
-        });
-        
-        // Create and send offer
-        const offer = await peerConnection.createOffer();
-        await peerConnection.setLocalDescription(offer);
-        
-        webSocket.send(JSON.stringify({
-            type: 'offer',
-            offer: offer,
-            target: data.username,
-            target_channel: data.channel_name
-        }));
-        
-        console.log('📤 Sent offer to', data.username);
+    // Handle incoming signaling messages
+    async function handleSignalingMessage(data) {
+        console.log('📨 Received:', data.type, data);
+
+        switch (data.type) {
+            case 'user_joined':
+                await handleUserJoined(data);
+                break;
+            case 'user_left':
+                handleUserLeft(data);
+                break;
+            case 'code_update':
+                handleCodeUpdate(data);
+                break;
+            case 'draw_event':
+                handleRemoteDraw(data.draw_data);
+                break;
+            case 'clear_board_event':
+                if (ctx) {
+                    ctx.fillStyle = '#FFFFFF';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                }
+                break;
+            case 'new_chat_message':
+                handleNewChatMessage(data);
+                break;
+
+            // WebRTC
+            case 'offer':
+                await handleOffer(data);
+                break;
+            case 'answer':
+                await handleAnswer(data);
+                break;
+            case 'ice_candidate':
+                await handleIceCandidate(data);
+                break;
+            default:
+                console.log('Unknown message type:', data.type);
+        }
+    }
+
+    // === NEW HANDLERS FOR COLLABORATION ===
+
+    function handleCodeUpdate(data) {
+        if (editorInstance && data.code !== editorInstance.getValue()) {
+            isRemoteChange = true;
+            const currentPos = editorInstance.getPosition();
+            editorInstance.setValue(data.code);
+            if (currentPos) editorInstance.setPosition(currentPos);
+            isRemoteChange = false;
+
+            // Also update language if changed
+            if (data.language) {
+                const currentLang = document.getElementById('language').value;
+                if (currentLang !== data.language) {
+                    monaco.editor.setModelLanguage(editorInstance.getModel(), data.language);
+                    document.getElementById('language').value = data.language;
+                }
+            }
+        }
+    }
+
+    function handleNewChatMessage(data) {
+        const chatBox = document.getElementById('chatMessages');
+        if (!chatBox) return;
+
+        const isMe = data.username === '{{ request.user.username }}';
+
+        const template = `
+            <div class="mb-3 ${isMe ? 'text-right' : 'text-left'}">
+                <div class="text-xs text-gray-400 mb-1">${data.username} • ${data.timestamp}</div>
+                <div class="inline-block px-4 py-2 rounded-2xl ${isMe ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-200'}">
+                    ${data.message}
+                </div>
+            </div>
+        `;
+
+        chatBox.insertAdjacentHTML('beforeend', template);
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        // Show notification if needed (logic can be added here)
+    }
+
+    // Chat Form Listener
+    document.addEventListener('DOMContentLoaded', () => {
+        const chatForm = document.getElementById('chatForm');
+        if (chatForm) {
+            chatForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const input = document.getElementById('chatInput');
+                const message = input.value.trim();
+
+                if (message && webSocket && webSocket.readyState === WebSocket.OPEN) {
+                    webSocket.send(JSON.stringify({
+                        type: 'chat_message',
+                        message: message
+                    }));
+                    input.value = '';
+                }
+            });
+        }
+    });
+
+    // Handle new user joining
+    async function handleUserJoined(data) {
+        console.log('👤 User joined:', data.username);
+
+        if (isCallActive && localStream) {
+            // Create peer connection for new user and send offer
+            const peerConnection = createPeerConnection(data.channel_name);
+
+            // Add local stream tracks
+            localStream.getTracks().forEach(track => {
+                peerConnection.addTrack(track, localStream);
+            });
+
+            // Create and send offer
+            const offer = await peerConnection.createOffer();
+            await peerConnection.setLocalDescription(offer);
+
+            webSocket.send(JSON.stringify({
+                type: 'offer',
+                offer: offer,
+                target: data.username,
+                target_channel: data.channel_name
+            }));
+
+            console.log('📤 Sent offer to', data.username);
+            updateConnectionStatus('connected'); // Update peer count
+        }
+    }
+
+    // Handle user leaving
+    function handleUserLeft(data) {
+        console.log('👋 User left:', data.username);
+
+        const channelName = data.channel_name;
+
+        // Close peer connection
+        if (peerConnections[channelName]) {
+            peerConnections[channelName].close();
+            delete peerConnections[channelName];
+        }
+
+        // Remove remote stream
+        if (remoteStreams[channelName]) {
+            delete remoteStreams[channelName];
+        }
+
+        // Remove video element
+        const videoElement = document.getElementById(`remote-${channelName}`);
+        if (videoElement) {
+            videoElement.parentElement.remove();
+        }
+
         updateConnectionStatus('connected'); // Update peer count
     }
-}
 
-// Handle user leaving
-function handleUserLeft(data) {
-    console.log('👋 User left:', data.username);
-    
-    const channelName = data.channel_name;
-    
-    // Close peer connection
-    if (peerConnections[channelName]) {
-        peerConnections[channelName].close();
-        delete peerConnections[channelName];
-    }
-    
-    // Remove remote stream
-    if (remoteStreams[channelName]) {
-        delete remoteStreams[channelName];
-    }
-    
-    // Remove video element
-    const videoElement = document.getElementById(`remote-${channelName}`);
-    if (videoElement) {
-        videoElement.parentElement.remove();
-    }
-    
-    updateConnectionStatus('connected'); // Update peer count
-}
+    // Handle incoming offer
+    async function handleOffer(data) {
+        console.log('📥 Received offer from', data.from_user);
 
-// Handle incoming offer
-async function handleOffer(data) {
-    console.log('📥 Received offer from', data.from_user);
-    
-    const peerConnection = createPeerConnection(data.from_channel);
-    
-    // Add local stream tracks
-    if (localStream) {
-        localStream.getTracks().forEach(track => {
-            peerConnection.addTrack(track, localStream);
-        });
-    }
-    
-    // Set remote description
-    await peerConnection.setRemoteDescription(new RTCSessionDescription(data.offer));
-    
-    // Create answer
-    const answer = await peerConnection.createAnswer();
-    await peerConnection.setLocalDescription(answer);
-    
-    // Send answer
-    webSocket.send(JSON.stringify({
-        type: 'answer',
-        answer: answer,
-        target_channel: data.from_channel
-    }));
-    
-    console.log('📤 Sent answer to', data.from_user);
-}
+        const peerConnection = createPeerConnection(data.from_channel);
 
-// Handle incoming answer
-async function handleAnswer(data) {
-    console.log('📥 Received answer from', data.from_user);
-    
-    const peerConnection = peerConnections[data.from_channel];
-    if (peerConnection) {
-        await peerConnection.setRemoteDescription(new RTCSessionDescription(data.answer));
-        console.log('✅ Answer processed');
-    }
-}
+        // Add local stream tracks
+        if (localStream) {
+            localStream.getTracks().forEach(track => {
+                peerConnection.addTrack(track, localStream);
+            });
+        }
 
-// Handle ICE candidate
-async function handleIceCandidate(data) {
-    console.log('🧊 Received ICE candidate from', data.from_user);
-    
-    const peerConnection = peerConnections[data.from_channel];
-    if (peerConnection && data.candidate) {
-        try {
-            await peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate));
-            console.log('✅ ICE candidate added');
-        } catch (err) {
-            console.error('❌ Error adding ICE candidate:', err);
+        // Set remote description
+        await peerConnection.setRemoteDescription(new RTCSessionDescription(data.offer));
+
+        // Create answer
+        const answer = await peerConnection.createAnswer();
+        await peerConnection.setLocalDescription(answer);
+
+        // Send answer
+        webSocket.send(JSON.stringify({
+            type: 'answer',
+            answer: answer,
+            target_channel: data.from_channel
+        }));
+
+        console.log('📤 Sent answer to', data.from_user);
+    }
+
+    // Handle incoming answer
+    async function handleAnswer(data) {
+        console.log('📥 Received answer from', data.from_user);
+
+        const peerConnection = peerConnections[data.from_channel];
+        if (peerConnection) {
+            await peerConnection.setRemoteDescription(new RTCSessionDescription(data.answer));
+            console.log('✅ Answer processed');
         }
     }
-}
 
-// Create peer connection
-function createPeerConnection(channelName) {
-    console.log('🔗 Creating peer connection for', channelName);
-    
-    const peerConnection = new RTCPeerConnection(ICE_SERVERS);
-    peerConnections[channelName] = peerConnection;
-    
-    // Handle ICE candidates
-    peerConnection.onicecandidate = (event) => {
-        if (event.candidate) {
-            webSocket.send(JSON.stringify({
-                type: 'ice_candidate',
-                candidate: event.candidate,
-                target_channel: channelName
-            }));
-            console.log('🧊 Sent ICE candidate');
-        }
-    };
-    
-    // Handle incoming stream
-    peerConnection.ontrack = (event) => {
-        console.log('📺 Received remote stream from', channelName);
-        
-        const remoteStream = event.streams[0];
-        remoteStreams[channelName] = remoteStream;
-        
-        // Create video element for remote stream
-        addRemoteVideo(channelName, remoteStream);
-    };
-    
-    // Handle connection state changes
-    peerConnection.onconnectionstatechange = () => {
-        console.log('🔗 Connection state:', peerConnection.connectionState, 'for', channelName);
-        
-        if (peerConnection.connectionState === 'failed' || 
-            peerConnection.connectionState === 'disconnected') {
-            handleUserLeft({ channel_name: channelName });
-        }
-    };
-    
-    return peerConnection;
-}
+    // Handle ICE candidate
+    async function handleIceCandidate(data) {
+        console.log('🧊 Received ICE candidate from', data.from_user);
 
-// Add remote video element
-function addRemoteVideo(channelName, stream) {
-    // Check if video already exists
-    let videoElement = document.getElementById(`remote-${channelName}`);
-    
-    if (!videoElement) {
-        // Create new video container
-        const videoGrid = document.getElementById('videoGrid');
-        const videoContainer = document.createElement('div');
-        videoContainer.className = 'video-container';
-        videoContainer.innerHTML = `
+        const peerConnection = peerConnections[data.from_channel];
+        if (peerConnection && data.candidate) {
+            try {
+                await peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate));
+                console.log('✅ ICE candidate added');
+            } catch (err) {
+                console.error('❌ Error adding ICE candidate:', err);
+            }
+        }
+    }
+
+    // Create peer connection
+    function createPeerConnection(channelName) {
+        console.log('🔗 Creating peer connection for', channelName);
+
+        const peerConnection = new RTCPeerConnection(ICE_SERVERS);
+        peerConnections[channelName] = peerConnection;
+
+        // Handle ICE candidates
+        peerConnection.onicecandidate = (event) => {
+            if (event.candidate) {
+                webSocket.send(JSON.stringify({
+                    type: 'ice_candidate',
+                    candidate: event.candidate,
+                    target_channel: channelName
+                }));
+                console.log('🧊 Sent ICE candidate');
+            }
+        };
+
+        // Handle incoming stream
+        peerConnection.ontrack = (event) => {
+            console.log('📺 Received remote stream from', channelName);
+
+            const remoteStream = event.streams[0];
+            remoteStreams[channelName] = remoteStream;
+
+            // Create video element for remote stream
+            addRemoteVideo(channelName, remoteStream);
+        };
+
+        // Handle connection state changes
+        peerConnection.onconnectionstatechange = () => {
+            console.log('🔗 Connection state:', peerConnection.connectionState, 'for', channelName);
+
+            if (peerConnection.connectionState === 'failed' ||
+                peerConnection.connectionState === 'disconnected') {
+                handleUserLeft({ channel_name: channelName });
+            }
+        };
+
+        return peerConnection;
+    }
+
+    // Add remote video element
+    function addRemoteVideo(channelName, stream) {
+        // Check if video already exists
+        let videoElement = document.getElementById(`remote-${channelName}`);
+
+        if (!videoElement) {
+            // Create new video container
+            const videoGrid = document.getElementById('videoGrid');
+            const videoContainer = document.createElement('div');
+            videoContainer.className = 'video-container';
+            videoContainer.innerHTML = `
             <video id="remote-${channelName}" autoplay playsinline></video>
             <div class="absolute bottom-4 left-4 bg-black/70 text-white px-3 py-1 rounded-lg text-sm font-semibold">
                 Participant
             </div>
         `;
-        videoGrid.appendChild(videoContainer);
-        
-        videoElement = document.getElementById(`remote-${channelName}`);
-    }
-    
-    videoElement.srcObject = stream;
-    console.log('✅ Remote video added for', channelName);
-}
+            videoGrid.appendChild(videoContainer);
 
-// Start video call
-document.getElementById('startCall').addEventListener('click', async () => {
-    try {
-        console.log('🎥 Starting video call...');
-        
-        // Get local media stream
-        localStream = await navigator.mediaDevices.getUserMedia({ 
-            video: { 
-                width: { ideal: 1280 },
-                height: { ideal: 720 }
-            }, 
-            audio: {
-                echoCancellation: true,
-                noiseSuppression: true,
-                autoGainControl: true
-            }
-        });
-        
-        // Show local video
-        document.getElementById('localVideo').srcObject = localStream;
-        isCallActive = true;
-        
-        // Initialize WebSocket if not connected
-        if (!webSocket || webSocket.readyState !== WebSocket.OPEN) {
-            initializeWebSocket();
+            videoElement = document.getElementById(`remote-${channelName}`);
         }
-        
-        console.log('✅ Video call started! Waiting for other participants...');
-        
-        // Show success message
-        const btn = document.getElementById('startCall');
-        btn.innerHTML = '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg> Connected';
-        btn.disabled = true;
-        btn.classList.add('opacity-50', 'cursor-not-allowed');
-        
-    } catch (err) {
-        console.error('❌ Failed to start video:', err);
-        alert('⚠️ Camera/Microphone Access Denied\n\nPlease allow camera and microphone permissions in your browser settings and reload the page.\n\nAlternatively, use the Whiteboard and Live Code features! ✨');
-    }
-});
 
-// Toggle video
-document.getElementById('toggleVideo').addEventListener('click', () => {
-    if (!localStream) {
-        alert('Please start the video call first!');
-        return;
+        videoElement.srcObject = stream;
+        console.log('✅ Remote video added for', channelName);
     }
-    
-    videoEnabled = !videoEnabled;
-    const videoTrack = localStream.getVideoTracks()[0];
-    if (videoTrack) {
-        videoTrack.enabled = videoEnabled;
-        const btn = document.getElementById('toggleVideo');
-        btn.innerHTML = videoEnabled ? 
-            '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg> Camera ON' : 
-            '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg> Camera OFF';
-        btn.classList.toggle('bg-red-600');
-        btn.classList.toggle('bg-green-600');
-        console.log('📹 Video', videoEnabled ? 'ON' : 'OFF');
-    }
-});
 
-// Toggle audio
-document.getElementById('toggleAudio').addEventListener('click', () => {
-    if (!localStream) {
-        alert('Please start the video call first!');
-        return;
-    }
-    
-    audioEnabled = !audioEnabled;
-    const audioTrack = localStream.getAudioTracks()[0];
-    if (audioTrack) {
-        audioTrack.enabled = audioEnabled;
-        const btn = document.getElementById('toggleAudio');
-        btn.innerHTML = audioEnabled ? 
-            '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg> Mic ON' : 
-            '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/></svg> Mic OFF';
-        btn.classList.toggle('bg-red-600');
-        btn.classList.toggle('bg-green-600');
-        console.log('🎤 Microphone', audioEnabled ? 'ON' : 'OFF');
-    }
-});
+    // Start video call
+    document.getElementById('startCall').addEventListener('click', async () => {
+        try {
+            console.log('🎥 Starting video call...');
 
-// ==================== SCREEN SHARE WITH WEBRTC ====================
-let screenStream = null;
-let isScreenSharing = false;
+            // Get local media stream
+            localStream = await navigator.mediaDevices.getUserMedia({
+                video: {
+                    width: { ideal: 1280 },
+                    height: { ideal: 720 }
+                },
+                audio: {
+                    echoCancellation: true,
+                    noiseSuppression: true,
+                    autoGainControl: true
+                }
+            });
 
-document.getElementById('startScreenShare').addEventListener('click', async () => {
-    try {
-        console.log('🖥️ Starting screen share...');
-        
-        // Get screen stream
-        screenStream = await navigator.mediaDevices.getDisplayMedia({ 
-            video: { 
-                cursor: "always",
-                mediaSource: 'screen'
-            },
-            audio: false
-        });
-        
-        // Show screen in local video
-        document.getElementById('localVideo').srcObject = screenStream;
-        isScreenSharing = true;
-        
-        // Replace video track in all peer connections
-        const screenVideoTrack = screenStream.getVideoTracks()[0];
-        
-        Object.values(peerConnections).forEach(pc => {
-            const sender = pc.getSenders().find(s => s.track && s.track.kind === 'video');
-            if (sender) {
-                sender.replaceTrack(screenVideoTrack);
-                console.log('✅ Broadcasting screen to peer');
+            // Show local video
+            document.getElementById('localVideo').srcObject = localStream;
+            isCallActive = true;
+
+            // Initialize WebSocket if not connected
+            if (!webSocket || webSocket.readyState !== WebSocket.OPEN) {
+                initializeWebSocket();
             }
-        });
-        
+
+            console.log('✅ Video call started! Waiting for other participants...');
+
+            // Show success message
+            const btn = document.getElementById('startCall');
+            btn.innerHTML = '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg> Connected';
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+
+        } catch (err) {
+            console.error('❌ Failed to start video:', err);
+            alert('⚠️ Camera/Microphone Access Denied\n\nPlease allow camera and microphone permissions in your browser settings and reload the page.\n\nAlternatively, use the Whiteboard and Live Code features! ✨');
+        }
+    });
+
+    // Toggle video
+    document.getElementById('toggleVideo').addEventListener('click', () => {
+        if (!localStream) {
+            alert('Please start the video call first!');
+            return;
+        }
+
+        videoEnabled = !videoEnabled;
+        const videoTrack = localStream.getVideoTracks()[0];
+        if (videoTrack) {
+            videoTrack.enabled = videoEnabled;
+            const btn = document.getElementById('toggleVideo');
+            btn.innerHTML = videoEnabled ?
+                '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg> Camera ON' :
+                '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg> Camera OFF';
+            btn.classList.toggle('bg-red-600');
+            btn.classList.toggle('bg-green-600');
+            console.log('📹 Video', videoEnabled ? 'ON' : 'OFF');
+        }
+    });
+
+    // Toggle audio
+    document.getElementById('toggleAudio').addEventListener('click', () => {
+        if (!localStream) {
+            alert('Please start the video call first!');
+            return;
+        }
+
+        audioEnabled = !audioEnabled;
+        const audioTrack = localStream.getAudioTracks()[0];
+        if (audioTrack) {
+            audioTrack.enabled = audioEnabled;
+            const btn = document.getElementById('toggleAudio');
+            btn.innerHTML = audioEnabled ?
+                '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg> Mic ON' :
+                '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/></svg> Mic OFF';
+            btn.classList.toggle('bg-red-600');
+            btn.classList.toggle('bg-green-600');
+            console.log('🎤 Microphone', audioEnabled ? 'ON' : 'OFF');
+        }
+    });
+
+    // ==================== SCREEN SHARE WITH WEBRTC ====================
+    let screenStream = null;
+    let isScreenSharing = false;
+
+    document.getElementById('startScreenShare').addEventListener('click', async () => {
+        try {
+            console.log('🖥️ Starting screen share...');
+
+            // Get screen stream
+            screenStream = await navigator.mediaDevices.getDisplayMedia({
+                video: {
+                    cursor: "always",
+                    mediaSource: 'screen'
+                },
+                audio: false
+            });
+
+            // Show screen in local video
+            document.getElementById('localVideo').srcObject = screenStream;
+            isScreenSharing = true;
+
+            // Replace video track in all peer connections
+            const screenVideoTrack = screenStream.getVideoTracks()[0];
+
+            Object.values(peerConnections).forEach(pc => {
+                const sender = pc.getSenders().find(s => s.track && s.track.kind === 'video');
+                if (sender) {
+                    sender.replaceTrack(screenVideoTrack);
+                    console.log('✅ Broadcasting screen to peer');
+                }
+            });
+
+            // Update UI
+            document.getElementById('startScreenShare').classList.add('hidden');
+            document.getElementById('stopScreenShare').classList.remove('hidden');
+
+            // Handle screen share stop (user clicks browser stop button)
+            screenVideoTrack.onended = () => {
+                stopScreenShare();
+            };
+
+            console.log('✅ Screen sharing started and broadcasting!');
+
+        } catch (err) {
+            console.error('❌ Screen share error:', err);
+            alert('⚠️ Screen Sharing\n\nScreen share was cancelled or not supported.');
+        }
+    });
+
+    document.getElementById('stopScreenShare').addEventListener('click', () => {
+        stopScreenShare();
+    });
+
+    function stopScreenShare() {
+        if (!isScreenSharing && !screenStream) return;
+
+        console.log('🛑 Stopping screen share...');
+
+        // Stop screen stream
+        if (screenStream) {
+            screenStream.getTracks().forEach(track => track.stop());
+            screenStream = null;
+        }
+
+        // Restore camera stream
+        if (localStream) {
+            document.getElementById('localVideo').srcObject = localStream;
+
+            // Replace screen track with camera track in all peer connections
+            const cameraVideoTrack = localStream.getVideoTracks()[0];
+
+            Object.values(peerConnections).forEach(pc => {
+                const sender = pc.getSenders().find(s => s.track && s.track.kind === 'video');
+                if (sender && cameraVideoTrack) {
+                    sender.replaceTrack(cameraVideoTrack);
+                    console.log('✅ Restored camera track to peer');
+                }
+            });
+        }
+
+        isScreenSharing = false;
+
         // Update UI
-        document.getElementById('startScreenShare').classList.add('hidden');
-        document.getElementById('stopScreenShare').classList.remove('hidden');
-        
-        // Handle screen share stop (user clicks browser stop button)
-        screenVideoTrack.onended = () => {
-            stopScreenShare();
-        };
-        
-        console.log('✅ Screen sharing started and broadcasting!');
-        
-    } catch (err) {
-        console.error('❌ Screen share error:', err);
-        alert('⚠️ Screen Sharing\n\nScreen share was cancelled or not supported.');
-    }
-});
+        document.getElementById('startScreenShare').classList.remove('hidden');
+        document.getElementById('stopScreenShare').classList.add('hidden');
 
-document.getElementById('stopScreenShare').addEventListener('click', () => {
-    stopScreenShare();
-});
-
-function stopScreenShare() {
-    if (!isScreenSharing && !screenStream) return;
-    
-    console.log('🛑 Stopping screen share...');
-    
-    // Stop screen stream
-    if (screenStream) {
-        screenStream.getTracks().forEach(track => track.stop());
-        screenStream = null;
+        console.log('✅ Screen sharing stopped');
     }
-    
-    // Restore camera stream
-    if (localStream) {
-        document.getElementById('localVideo').srcObject = localStream;
-        
-        // Replace screen track with camera track in all peer connections
-        const cameraVideoTrack = localStream.getVideoTracks()[0];
-        
-        Object.values(peerConnections).forEach(pc => {
-            const sender = pc.getSenders().find(s => s.track && s.track.kind === 'video');
-            if (sender && cameraVideoTrack) {
-                sender.replaceTrack(cameraVideoTrack);
-                console.log('✅ Restored camera track to peer');
-            }
-        });
-    }
-    
-    isScreenSharing = false;
-    
-    // Update UI
-    document.getElementById('startScreenShare').classList.remove('hidden');
-    document.getElementById('stopScreenShare').classList.add('hidden');
-    
-    console.log('✅ Screen sharing stopped');
-}
 
-// Initialize WebSocket connection when page loads
-console.log('🚀 Initializing WebRTC...');
-initializeWebSocket();
-console.log('✅ All features loaded successfully!');
+    // Initialize WebSocket connection when page loads
+    console.log('🚀 Initializing WebRTC...');
+    initializeWebSocket();
+    console.log('✅ All features loaded successfully!');
 </script>
 {% endblock %}
-
