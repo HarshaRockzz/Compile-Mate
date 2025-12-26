@@ -70,7 +70,23 @@ class CodeExecutor:
         if not self.config:
             raise ValueError(f"Unsupported language: {language}")
         
-        self.client = docker.from_env()
+        # Try to connect to Docker with fallbacks for macOS/Desktop
+        try:
+            self.client = docker.from_env()
+            self.client.ping()
+        except Exception:
+            try:
+                # Fallback 1: Standard socket
+                self.client = docker.DockerClient(base_url='unix://var/run/docker.sock')
+                self.client.ping()
+            except Exception:
+                try:
+                    # Fallback 2: User-specific socket (typical on modern Docker Desktop for Mac)
+                    user_socket = os.path.expanduser('~/.docker/run/docker.sock')
+                    self.client = docker.DockerClient(base_url=f'unix://{user_socket}')
+                    self.client.ping()
+                except Exception as e:
+                     raise docker.errors.DockerException(f"Could not connect to Docker. Is it running? Error: {str(e)}")
     
     def _create_temp_files(self) -> Tuple[str, str]:
         """
