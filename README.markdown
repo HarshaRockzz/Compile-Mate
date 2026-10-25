@@ -1,291 +1,323 @@
-# 🚀 CompileMate: Code, Compete, Conquer! 🏆
+<div align="center">
 
-Welcome to **CompileMate**—a cutting-edge, gamified competitive programming platform that transforms coding practice into an exhilarating journey! 🌟 Whether you're a newbie cracking your first algorithm or a coding ninja chasing leaderboard dominance, CompileMate offers a dynamic, rewarding ecosystem to level up your skills. 💻
+<img src="docs/assets/readme/hero.svg" alt="CompileMate: Code. Compete. Earn Real Rewards." width="100%">
 
----
+<br>
 
-## 🌈 What is CompileMate?
+![Django](https://img.shields.io/badge/Django-4.2-092E20?style=for-the-badge&logo=django&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
+![Redis](https://img.shields.io/badge/Redis-7-DC382D?style=for-the-badge&logo=redis&logoColor=white)
+![Channels](https://img.shields.io/badge/WebSockets-Django_Channels-6366f1?style=for-the-badge)
+![Celery](https://img.shields.io/badge/Celery-5.3-37814A?style=for-the-badge&logo=celery&logoColor=white)
+![Tailwind](https://img.shields.io/badge/Tailwind-CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 
-CompileMate blends the thrill of competitive programming with gamification to create an addictive, skill-building experience. Solve mind-bending problems, battle in live contests, earn rewards, and connect with a global community of coders! 🌍 Here's what makes CompileMate stand out:
+**[Live site](https://compilemate.in)** &nbsp;·&nbsp; **[Features](#-features)** &nbsp;·&nbsp; **[Architecture](#-architecture)** &nbsp;·&nbsp; **[Quick start](#-quick-start)** &nbsp;·&nbsp; **[Deploy](#-deployment)**
 
-- 🧠 **Challenge Yourself**: Tackle algorithmic problems across Easy, Medium, Hard, and Expert levels.
-- 🏅 **Compete Live**: Join real-time contests with dynamic leaderboards to test your mettle.
-- 🎮 **Gamified Fun**: Earn **MateCoins**, badges, and XP to unlock rewards and flex your achievements.
-- 📊 **Build Your Brand**: Showcase your coding stats and portfolio to recruiters or peers.
-- 🤝 **Community Vibes**: Connect with coders worldwide (community features coming soon!).
+</div>
 
----
+<img src="docs/assets/readme/divider.svg" width="100%" alt="">
 
-## ✨ Key Features
+## ✨ See it move
 
-### 1. 🔐 User Authentication & Profiles
-- **Secure Sign-Up**: Register/login with email/password or OAuth (Google, GitHub) with email verification and password reset. 🔒
-- **Custom Profiles**: Flaunt your stats—problems solved, contests won, badges, and global rank. Toggle privacy to keep it low-key or go public! 😎
-- **Portfolio Power**: Link your GitHub or portfolio to create a professional coding showcase. 📄
-- **Public Profiles**: Share your achievements to inspire others or catch recruiters' eyes. 👀
+<div align="center">
 
-### 2. 💻 Problem Solving Environment
-- **Vast Problem Library**: Explore thousands of problems tagged by difficulty (Easy to Expert) and topics (e.g., Dynamic Programming, Graph Theory). 🔍
-- **Rich Details**: Problems come with clear statements, constraints, sample inputs/outputs, and starter code in Python, C++, Java, and JavaScript. 📝
-- **Interactive Editor**: Code in a sleek editor with syntax highlighting, auto-indentation, and instant feedback. ⚡
-- **Submission Insights**: Review submission history with pass/fail status, runtime, and memory usage. 📈
-- **Global Leaderboard**: Climb the ranks by solving problems and dominating contests! 🏆
+<img src="docs/assets/readme/tour.gif" alt="CompileMate product tour: hook, code judge, 1v1 battles, CodeConnect, rewards" width="88%">
 
-### 3. 🏟️ Competitive Contests
-- **Regular Showdowns**: Join weekly, monthly, or special event contests with varying durations and difficulties. 🕒
-- **Live Leaderboards**: Watch rankings update in real-time for heart-pounding competition. 📊
-- **Performance Analytics**: Dive into past contest stats—rank, score, and problem breakdowns. 📉
-- **Custom Contests (Planned)**: Create private battles for friends or teams. 👥
+<sub>A 25-second highlight reel. Judge, battles, CodeConnect and the rewards loop, cut from the full product film.</sub>
 
-### 4. 🎉 Gamification & Rewards
-- **MateCoins 💰**: Earn virtual currency by solving problems, winning contests, or keeping streaks alive.
-- **XP & Levels 🚀**: Gain experience points to unlock advanced problem sets and premium badges.
-- **Badges Galore 🥇**: Collect badges for milestones (e.g., "100 Problems Solved") or epic streaks.
-- **Streaks 🔥**: Stay consistent with daily/weekly challenges to score bonus MateCoins and exclusive badges.
+</div>
 
-### 5. 🛍️ Marketplace
-- **Reward Redemption**: Swap MateCoins for Amazon vouchers, premium subscriptions, or cool profile themes. 🎁
-- **Badge Gallery**: Track your badge progress and see what’s next to unlock. 🏅
-- **Premium Features (Planned)**: Access exclusive problems, analytics, or an ad-free experience. 🌟
+<img src="docs/assets/readme/divider.svg" width="100%" alt="">
 
-### 6. 📄 Resume Scanner
-- **Skill Extraction**: Upload your resume (PDF) to analyze coding skills and get tailored feedback. 🔍
-- **Pro Tips**: Receive actionable advice to polish your resume for tech roles. 💼
-- **Portfolio Builder**: Use your CompileMate stats to craft a standout coding portfolio. 🌟
+## 🧭 What is CompileMate?
 
-### 7. 🤝 Community & Support
-- **Live Support Chat**: Get instant help from admins via in-app chat powered by Django Channels. 💬
-- **Community Forum (Planned)**: Share solutions, discuss problems, and vibe with fellow coders. 🌐
-- **Learning Hub (Planned)**: Access tutorials, editorials, and video walkthroughs for tough problems. 📚
+A competitive-programming platform that covers the **whole developer journey** in one product: learn, practice, compete live, pair-program, get hired, and get paid back in real rewards.
 
-### 8. 🛠️ Admin & Moderation Tools
-- **Admin Dashboard**: Manage users, problems, contests, and rewards with ease. ⚙️
-- **Content Moderation**: Ensure high-quality user-generated content (e.g., custom problems). ✅
-- **Analytics Suite**: Track user growth, problem popularity, and contest engagement. 📊
-- **Problem Creation**: Admins can craft new problems with test cases and constraints. ✍️
+<table>
+<tr>
+<td width="33%" valign="top">
 
-### 9. ⚡ Scalability & Performance
-- **Robust Backend**: Built with Django and PostgreSQL for speed and scalability. 🖥️
-- **Real-Time Magic**: Django Channels and Redis power live leaderboards and chat. 🚀
-- **Secure & Stable**: Rate limiting, CSRF protection, and secure auth keep things smooth. 🔒
+### 🎯 Practice
+A sandboxed code judge, AI hints that guide without spoiling, learning paths, and certificates anyone can verify.
 
----
+</td>
+<td width="33%" valign="top">
 
-## 🛠️ Tech Stack
-CompileMate is powered by a modern, scalable tech stack for a seamless experience:
+### ⚔️ Compete
+Rated contests, live leaderboards, and 1v1 battles where both players stake MateCoins and the winner takes the pot.
 
-### Backend
-- **Django**: Python-based framework for rapid, secure development. 🐍
-- **Django REST Framework**: APIs for smooth frontend-backend communication. 🔗
+</td>
+<td width="33%" valign="top">
 
-### Frontend
-- **Django Templates**: Fast, SEO-friendly server-side rendering. 📄
-- **Tailwind CSS**: Sleek, responsive UI with utility-first styling. 🎨
-- **Alpine.js**: Lightweight JavaScript for dynamic interactions. ⚡
+### 🪙 Earn
+Every solve, streak and win earns **MateCoins**, redeemable for real vouchers from brands like Zomato, Amazon, Uber, Swiggy and Steam.
 
-### Database
-- **PostgreSQL**: Robust relational database for production. 🗄️
-- **SQLite**: Lightweight option for development/testing. 💾
+</td>
+</tr>
+</table>
 
-### Real-Time Features
-- **Django Channels**: WebSocket-powered live leaderboards and chat. 📡
-- **Redis**: In-memory store for caching and task queues. 🚀
-
-### Task Queue
-- **Celery**: Handles background tasks like email sending and code evaluation. ⏳
-- **Redis**: Message broker for Celery. 🔧
-
-### Deployment
-- **Gunicorn**: WSGI server for running Django in production. 🖥️
-- **Nginx**: Reverse proxy for static files and load balancing. 🌐
-- **Render.com**: Easy cloud deployment and scaling. ☁️
-- **WhiteNoise**: Simplifies static file serving in production. 📁
-
----
-
-## ⚙️ Local Setup
-Get CompileMate running locally in a few steps! 🚀
-
-### Prerequisites
-- Python 3.9+ 🐍
-- PostgreSQL (recommended) or SQLite 🗄️
-- Redis (optional, for real-time features) 🔧
-- Git 🌐
-- Node.js (optional, for frontend assets) 🌐
-
-### Steps
-1. **Clone the Repo**:
-   ```bash
-   git clone https://github.com/yourusername/Compile-Mate.git
-   cd Compile-Mate
-   ```
-
-2. **Set Up Virtual Environment**:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
-3. **Install Dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Configure Environment Variables**:
-   Create a `.env` file in the project root with:
-   ```plaintext
-   DJANGO_SECRET_KEY='your-secret-key'
-   DATABASE_URL='sqlite:///db.sqlite3'  # or PostgreSQL URL
-   REDIS_URL='redis://localhost:6379/1'  # Optional
-   DEBUG=True
-   ```
-
-5. **Set Up Database**:
-   ```bash
-   python manage.py migrate
-   ```
-
-6. **Create Superuser (Admin)**:
-   ```bash
-   python manage.py createsuperuser
-   ```
-
-7. **Add Sample Problems**:
-   ```bash
-   python manage.py add_sample_problems
-   ```
-
-8. **(Optional) Set Up Redis & Celery**:
-   - Install and run Redis locally.
-   - Start Celery worker:
-     ```bash
-     celery -A compilemate worker -l info
-     ```
-
-9. **Run the Server**:
-   ```bash
-   python manage.py runserver
-   ```
-
-10. **Access the App**:
-    Open [http://127.0.0.1:8000/](http://127.0.0.1:8000/) in your browser. 🌐
-
----
-
-## ☁️ Deployment (Render.com Example)
-Deploy CompileMate to production with ease! 🚀
-
-### Steps
-1. **Push to GitHub**:
-   Ensure your repo is accessible to Render.
-
-2. **Create Web Service**:
-   - Connect your GitHub repo.
-   - Set runtime to Python 3.
-   - Build command:
-     ```bash
-     pip install -r requirements.txt
-     python manage.py collectstatic --noinput
-     python manage.py migrate
-     ```
-   - Start command:
-     ```bash
-     gunicorn compilemate.wsgi:application
-     ```
-
-3. **Add PostgreSQL Database**:
-   - Create a PostgreSQL instance on Render.
-   - Add `DATABASE_URL` to environment variables.
-
-4. **Configure Environment Variables**:
-   In Render’s dashboard, add:
-   ```plaintext
-   DJANGO_SECRET_KEY='your-secret-key'
-   DATABASE_URL='your-postgres-url'
-   REDIS_URL='your-redis-url'  # Optional
-   DEBUG=False
-   ALLOWED_HOSTS='your-domain.com,*.onrender.com'
-   ```
-
-5. **Set Up Static Files**:
-   - Use WhiteNoise in `settings.py` for static file serving.
-
-6. **Deploy**:
-   Trigger a manual deploy or enable auto-deploys.
-
-7. **Verify**:
-   Visit your Render URL (e.g., [https://your-app.onrender.com/](https://your-app.onrender.com/)). 🌐
-
----
-
-## 🧪 Testing
-CompileMate’s test suite ensures rock-solid reliability. 🛡️
-
-### Running Tests
-```bash
-python manage.py test
+```mermaid
+flowchart LR
+    A([Sign up]) --> B[Learn<br/>paths · study plans]
+    B --> C[Practice<br/>judge · AI tutor]
+    C --> D[Compete<br/>contests · 1v1 battles]
+    D --> E[Collaborate<br/>CodeConnect · reviews · teams]
+    E --> F[Get hired<br/>resume scan · jobs]
+    C -. earns .-> G((MateCoins))
+    D -. earns .-> G
+    E -. earns .-> G
+    G --> H[[Redeem<br/>real vouchers]]
+    H -. fuels .-> C
+    classDef coin fill:#f59e0b,stroke:#b45309,color:#fff;
+    class G coin
 ```
 
-### Test Coverage
-- Unit tests for models, views, and APIs. ✅
-- Integration tests for auth, submissions, and contests. 🔄
-- Generate coverage report:
-  ```bash
-  pip install coverage
-  coverage run manage.py test
-  coverage report
-  ```
+<div align="center">
+<img src="docs/assets/readme/stats.svg" alt="22 Django apps, 104 data models, 194 URL routes, 112 templates, 32K+ lines of Python, 4 judged languages" width="100%">
+<sub>Scale figures are counted from this repository (excluding migrations, <code>venv</code> and collected static files).</sub>
+</div>
 
----
+<img src="docs/assets/readme/divider.svg" width="100%" alt="">
 
-## 🤝 Contributing
-Join the CompileMate mission to make coding epic! 🚀
+## 🚀 Features
 
-1. **Fork the Repo**: Click "Fork" on GitHub.
-2. **Create a Feature Branch**:
-   ```bash
-   git checkout -b feature/your-feature
-   ```
-3. **Commit Changes**:
-   ```bash
-   git commit -am 'Add new feature: describe your changes'
-   ```
-4. **Push to Fork**:
-   ```bash
-   git push origin feature/your-feature
-   ```
-5. **Open a Pull Request**: Submit with a clear description. 📝
+### 🎯 Code judge
 
-### Guidelines
-- Follow **PEP 8** for Python and **Prettier** for JS/CSS. 📏
-- Write tests for new features/bug fixes. ✅
-- Update docs for changes. 📚
-- Pass CI checks (linting, tests). 🛠️
+<img src="docs/assets/readme/judge.svg" alt="Animated code judge: typing a solution, running it, and every test case passing" width="100%">
 
----
+| | |
+|---|---|
+| **Languages** | Python, Java, C++ and JavaScript. A server-side harness wraps your function, so you only write the solution. |
+| **Execution** | A Docker-based sandboxed executor (compile-once), with Judge0 as an alternative backend. |
+| **Feedback** | Per-test-case status, runtime and memory, plus custom input. |
+| **Content** | A growing problem library plus company-wise problem sets. |
 
-## 📄 License
-CompileMate is licensed under the **MIT License**. Use, modify, and share freely! 📖
+<details>
+<summary><b>🤖 AI tutor: hints, not answers</b></summary>
+<br>
 
----
+Three levels of progressive hints (gentle, moderate, detailed), plus **explain my error**, **review my code**, **suggest test cases** and an **AI problem generator**. AI calls are capped per user per day.
 
-## 🙋 Support & Community
-- **Issues**: Report bugs or request features on GitHub Issues. 🐞
-- **In-App Support**: Chat with admins in real-time. 💬
-- **Community (Planned)**: Join our upcoming forum to connect with coders. 🌐
-- **Email**: Reach out at [support@compilemate.com](mailto:support@compilemate.com). 📧
+</details>
 
----
+### ⚔️ 1v1 battles
 
-## 📅 Roadmap
-- 🤝 Community discussion forum
-- 🏟️ Custom contest creation
-- 📚 Advanced problem editorials and tutorials
-- 📱 Mobile app (iOS/Android)
-- 🤖 AI-powered problem recommendations
-- 🔗 Integration with GitHub, LinkedIn
+<img src="docs/assets/readme/battle.svg" alt="Animated 1v1 battle: stakes, live test-case progress, and the winner taking the pot" width="100%">
 
----
+Both players put MateCoins at stake when they enter. Progress streams over WebSockets. The winner receives the pot (2× the stake); a draw refunds both stakes; a cancelled battle refunds the challenger.
 
-## 🎉 Happy Coding!
-Join **CompileMate** and skyrocket your coding skills to the next level! 🚀💻
+```mermaid
+sequenceDiagram
+    autonumber
+    participant A as Player A
+    participant S as Battle service
+    participant B as Player B
+    A->>S: Create battle (stake 50)
+    B->>S: Accept battle (stake 50)
+    Note over S: Both stakes are taken, pot = 100
+    par live updates over WebSocket
+        A-->>S: Submit solution
+        B-->>S: Submit solution
+    end
+    S-->>A: Winner? credit 2 x stake
+    S-->>B: Draw? refund the stake
+```
+
+<details>
+<summary><b>🏟️ Contests and leaderboards</b></summary>
+<br>
+
+Timed, rated rounds with per-problem scoring, a live leaderboard, contest announcements, and team contests.
+
+</details>
+
+### 🔥 Habits that bring people back
+
+<img src="docs/assets/readme/habits.svg" alt="Animated daily challenge, streak counter ticking up, streak freeze and six badge tiers" width="100%">
+
+- **Daily challenge** with bonus MateCoins and XP.
+- **Streaks** with purchasable **streak freezes**, so one missed day doesn't erase progress.
+- **Badges** across six tiers: Bronze, Silver, Gold, Platinum, Diamond, Legendary. Plus achievements and milestones.
+
+### 📚 Learn and certify
+
+<img src="docs/assets/readme/learn.svg" alt="Animated learning-path progress bars and a verified certificate appearing" width="100%">
+
+Learning paths (modules, enrollment, ratings, editorials), structured **study plans**, **skill assessments**, and **PDF certificates** with a public verification page.
+
+### 🎥 CodeConnect: pair-program live
+
+<img src="docs/assets/readme/collab.svg" alt="Animated CodeConnect room: video tiles, shared editor with two cursors, whiteboard drawing and chat" width="100%">
+
+Rooms with **WebRTC video** (signaling over WebSockets), a shared **Monaco** code editor, a **whiteboard** and room chat.
+
+### 🤝 Community
+
+<img src="docs/assets/readme/community.svg" alt="Teams and clans, social feed, peer code reviews, snippet library" width="100%">
+
+**Teams** with roles, invitations, team XP and team contests. A **social feed** with posts, comments, follows and activity. **Peer code reviews** with line comments, ratings and reviewer stats. A **snippet library** with tags, collections and comments.
+
+### 💼 Career tools
+
+<img src="docs/assets/readme/career.svg" alt="Animated ATS score gauge, job board and hire-ready proof" width="100%">
+
+**Resume scanner** with ATS and keyword scoring, a **job board** with companies, postings and application tracking, **company-wise problems**, and **recruiter profiles with coding challenges**.
+
+### 🪙 Rewards economy
+
+<img src="docs/assets/readme/rewards.svg" alt="Animated flow from solving to MateCoins to vouchers, with earn rates and brand tiles" width="100%">
+
+Earn rates shown on the site: Easy **+50**, Medium **+150**, Hard **+300**, Contest win **+1000**. Redeem for vouchers, plus daily rewards, referral rewards and promo codes.
+
+### 🎉 Built to be shared
+
+<img src="docs/assets/readme/growth.svg" alt="Coder Wrapped, Roast My Code, quiz, horoscope, bingo and tier list" width="100%">
+
+**Coder Wrapped**, **Roast My Code**, a developer personality quiz, a coding horoscope, dev bingo and a tier list: small share-worthy loops that bring new people in.
+
+<img src="docs/assets/readme/divider.svg" width="100%" alt="">
+
+## 🏗 Architecture
+
+<img src="docs/assets/readme/architecture.svg" alt="Animated architecture: browser and OAuth into Django (HTTP and WebSockets), then PostgreSQL, Redis, Celery, the code judge and the AI tutor" width="100%">
+
+- **HTTP** is served by Gunicorn (WSGI). **WebSockets** (battles, CodeConnect signaling, live support chat) run on Django Channels under ASGI with Daphne.
+- **Redis** backs the cache, the Channels layer and the Celery broker. Without `REDIS_URL` the app falls back to in-memory backends for local development.
+- **Celery** (worker + beat) runs scheduled and async work.
+
+<details>
+<summary><b>Tech stack</b></summary>
+<br>
+
+| Layer | Tools |
+|---|---|
+| Backend | Django 4.2, Django REST framework, django-allauth (Google and GitHub), django-otp (2FA), django-filter |
+| Real-time | Django Channels, channels-redis, Daphne, WebRTC |
+| Data | PostgreSQL, Redis, django-cacheops |
+| Async | Celery, django-celery-beat, django-celery-results |
+| Frontend | Tailwind CSS, HTMX, Alpine.js, Monaco Editor |
+| Judge | Docker sandbox executor, Judge0 API |
+| AI | OpenAI (tutor and problem generator) |
+| Docs and PDF | ReportLab (certificates), PyPDF2, python-docx |
+| Ops | Whitenoise, Docker, Render |
+
+</details>
+
+<details>
+<summary><b>Project layout</b></summary>
+<br>
+
+```text
+compilemate/          settings, ASGI/WSGI, Celery
+core/                 home, dashboard, profile, AI tutor, support chat, notifications
+problems/  judge/     problems, submissions · sandbox executor, Judge0, language harness
+contests/  battles/   rated contests · 1v1 battles (WebSocket consumer)
+daily_challenges/     daily challenge, streaks, streak freezes
+achievements/         badges (6 tiers), achievements, milestones
+learning_paths/       paths, modules, editorials   study_plans/  certifications/
+collaboration/        CodeConnect rooms, WebRTC signaling
+teams/ social_feed/ code_reviews/ snippets/        community
+jobs/ resume_scanner/ company_problems/            career
+rewards/              vouchers, promo codes, daily and referral rewards
+fun/                  Wrapped, Roast My Code, quiz, horoscope, bingo, tier list
+users/ theme/         accounts, coins · Tailwind theme
+templates/ static/    112 templates · PWA manifest and service worker
+```
+
+</details>
+
+<img src="docs/assets/readme/divider.svg" width="100%" alt="">
+
+## ⚡ Quick start
+
+**Prerequisites:** Python 3.11+, PostgreSQL 15 (or Docker). Redis is optional locally.
+
+```bash
+git clone https://github.com/Compile-Mate/Compile-Mate.git
+cd Compile-Mate
+
+python3 -m venv venv && source venv/bin/activate
+pip install -r requirements.txt
+```
+
+Create a `.env` file in the project root:
+
+```env
+SECRET_KEY=change-me
+DEBUG=True
+DB_NAME=compilemate_db
+DB_USER=postgres
+DB_PASSWORD=your-password
+DB_HOST=localhost
+DB_PORT=5432
+```
+
+```bash
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py seed_content        # problems, paths, assessments, badges, FAQ (idempotent)
+python manage.py runserver           # http://127.0.0.1:8000
+```
+
+<details>
+<summary><b>Optional environment variables</b></summary>
+<br>
+
+| Variable | Enables |
+|---|---|
+| `DATABASE_URL` | Single-URL database config (used on Render) |
+| `REDIS_URL` | Redis cache, Channels layer and Celery broker |
+| `OPENAI_API_KEY` | AI tutor and problem generator |
+| `JUDGE0_API_URL`, `JUDGE0_API_KEY` | Judge0 execution backend |
+| `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | Google sign-in |
+| `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` | GitHub sign-in |
+| `EMAIL_HOST`, `EMAIL_PORT`, `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD` | Outgoing email |
+
+</details>
+
+<details>
+<summary><b>🐳 Run everything with Docker Compose</b></summary>
+<br>
+
+```bash
+docker compose up --build
+```
+
+Starts PostgreSQL 15, Redis 7, the web app, a Celery worker and Celery beat.
+
+</details>
+
+<details>
+<summary><b>🧪 Tests and handy commands</b></summary>
+<br>
+
+```bash
+pytest                                      # pytest + pytest-django (see pytest.ini)
+python manage.py check_system               # system health check
+python manage.py seed_content --dry-run     # preview content changes, then roll back
+python manage.py seed_problems              # sample problem set
+python manage.py generate_promo_codes       # rewards promo codes
+python manage.py clear_cache
+```
+
+</details>
+
+## 🌍 Deployment
+
+- **Render:** `render.yaml` + `build.sh` (install, `collectstatic`, `migrate`, `createcachetable`) with a managed PostgreSQL database.
+- **Docker:** `Dockerfile` runs Gunicorn; `docker-compose.yml` adds Postgres, Redis and Celery for local parity.
+- **WebSockets in production:** run an ASGI server so battles, CodeConnect and live chat work, for example `daphne -b 0.0.0.0 -p 8000 compilemate.asgi:application`.
+
+## 🔐 Security
+
+Google and GitHub sign-in via allauth, optional two-factor authentication, Django's CSRF protection, custom **rate-limiting** and **security-header** middleware, and per-user daily limits on AI calls.
+
+<br>
+
+<img src="docs/assets/readme/footer.svg" alt="Code. Compete. Earn Real Rewards." width="100%">
+
+<div align="center">
+<sub>The previous long-form README is kept at <a href="docs/README.legacy.md">docs/README.legacy.md</a>.</sub>
+</div>
